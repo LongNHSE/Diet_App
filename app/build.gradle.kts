@@ -32,7 +32,15 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.recyclerview.selection)
+    implementation(libs.androidx.appcompat.v141)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.material.v160)
 
+    implementation(libs.viewpager2)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
