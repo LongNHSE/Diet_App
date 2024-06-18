@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -76,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
-
+                TextView textView = findViewById(R.id.title);
+                if (tab.getPosition() == 0) {
+                    textView.setText("Meal and Exercise Plan");
+                } else {
+                    textView.setText("Meal Plan");
+                }
             }
 
             @Override

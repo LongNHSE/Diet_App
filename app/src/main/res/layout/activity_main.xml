@@ -7,8 +7,19 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:padding="16dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Meal and Exercise Plan"
+        android:textColor="#2F5233"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"/>
     <com.google.android.material.tabs.TabLayout
         android:layout_marginTop="10dp"
         android:id="@+id/tab"
