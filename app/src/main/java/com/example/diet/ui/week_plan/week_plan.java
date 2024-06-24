@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.diet.R;
 import com.example.diet.food_type.dto.food_type;
 import com.example.diet.food_type.service.FoodTypeServiceImp;
+import com.example.diet.meal.dto.Meal;
+import com.example.diet.meal.service.MealServiceImp;
 import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
 
@@ -105,6 +107,25 @@ public class week_plan extends Fragment {
     }
 
     private void fetchFoodType() {
+//        MealServiceImp mealService = RetrofitClient.getClient().create(MealServiceImp.class);
+//        Call<ResponseDTO<List<Meal>>> call = mealService.getAllMealBasedOnDay("6673ec30817495798818781c");
+//        Log.d("week_plan", "fetchFoodType: " + call.request().url().toString());
+//
+//        call.enqueue(new Callback<ResponseDTO<List<Meal>>>() {
+//            @Override
+//            public void onResponse(Call<ResponseDTO<List<Meal>>> call, Response<ResponseDTO<List<Meal>>> response) {
+//                Log.d("week_plan", "Response: " + response.body().toString());
+//                List<Meal> mealList = response.body().getData();
+//                Log.d("week_plan", "onResponse: " + mealList);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseDTO<List<Meal>>> call, Throwable t) {
+//                Log.d("week_plan", "onFailure: " + t.getMessage());
+//            }
+//        });
+
         FoodTypeServiceImp foodTypeService = RetrofitClient.getClient().create(FoodTypeServiceImp.class);
         Call<ResponseDTO<List<food_type>>> call = foodTypeService.getAllFoodType();
         Log.d("week_plan", "fetchFoodType: " + call.request().url().toString());
