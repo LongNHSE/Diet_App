@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/typeName"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_background"
+            android:padding="2dp"
+            android:text="Prepare The Spices"
+            android:textAlignment="center"
+            android:textColor="@color/chrome_white" />
+    </LinearLayout>
+    <!--        Meal section-->
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="3"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_week_plan">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:background="@drawable/rectangle_background_chrome_white"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:padding="10dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Vegetable oil"-->
+        <!--                android:textAlignment="center" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="48dp"-->
+        <!--                android:src="@drawable/calories" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="200g"-->
+        <!--                android:textAlignment="center" />-->
+        <!--        </LinearLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:background="@drawable/rectangle_background_chrome_white"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:padding="10dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Vegetable oil"-->
+        <!--                android:textAlignment="center" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="48dp"-->
+        <!--                android:src="@drawable/calories" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="200g"-->
+        <!--                android:textAlignment="center" />-->
+        <!--        </LinearLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:background="@drawable/rectangle_background_chrome_white"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:padding="10dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Vegetable oil"-->
+        <!--                android:textAlignment="center" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="48dp"-->
+        <!--                android:src="@drawable/calories" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="200g"-->
+        <!--                android:textAlignment="center" />-->
+        <!--        </LinearLayout>-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_margin="10dp"-->
+        <!--            android:background="@drawable/rectangle_background_chrome_white"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:padding="10dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Vegetable oil"-->
+        <!--                android:textAlignment="center" />-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="48dp"-->
+        <!--                android:src="@drawable/calories" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="200g"-->
+        <!--                android:textAlignment="center" />-->
+        <!--        </LinearLayout>-->
+
+    </GridLayout>
+</LinearLayout>

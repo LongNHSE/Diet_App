@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    android:layout_margin="3dp"
+    android:layout_weight="1"
+    android:background="@color/mineral_green"
+    android:enabled="true"
+    android:text="Day"
+    android:textAllCaps="false"
+    android:textColor="@color/button_text_color" />
