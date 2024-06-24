@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         // Set an OnClickListener to the button
         getStartedButton.setOnClickListener(v -> {
             // Create an Intent to start StartActivity
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, IntroSliderActivity.class);
             startActivity(intent);
             finish(); // Optional: Close this activity once the button is clicked
         });
