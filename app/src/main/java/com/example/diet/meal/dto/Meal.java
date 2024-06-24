@@ -1,6 +1,8 @@
 package com.example.diet.meal.dto;
 
 import com.example.diet.meal_frame.dto.MealFrame;
+import com.example.diet.meal_standard.dto.MealStandard;
+import com.example.diet.meal_structure.dto.MealStructure;
 
 import java.util.Date;
 
@@ -23,11 +25,14 @@ public class Meal {
     private Date createdAt;
     private Date updatedAt;
     private MealFrame mealFrame;
+    private MealStandard mealStandard;
+    private MealStructure mealStructure;
 
     public Meal() {
     }
 
-    public Meal(String mealFrameId, String dayId, double totalCalstd, double carbohydratedstd, double fiberstd, double proteinstd, double fatstd, double waterstd, double totalCal, double carbohydrated, double fiber, double protein, double fat, double water, String _id, Date createdAt, Date updatedAt, MealFrame mealFrame) {
+
+    public Meal(String mealFrameId, String dayId, double totalCalstd, double carbohydratedstd, double fiberstd, double proteinstd, double fatstd, double waterstd, double totalCal, double carbohydrated, double fiber, double protein, double fat, double water, String _id, Date createdAt, Date updatedAt, MealFrame mealFrame, MealStandard mealStandard, MealStructure mealStructure) {
         this.mealFrameId = mealFrameId;
         this.dayId = dayId;
         this.totalCalstd = totalCalstd;
@@ -46,6 +51,24 @@ public class Meal {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.mealFrame = mealFrame;
+        this.mealStandard = mealStandard;
+        this.mealStructure = mealStructure;
+    }
+
+    public MealStandard getMealStandard() {
+        return mealStandard;
+    }
+
+    public void setMealStandard(MealStandard mealStandard) {
+        this.mealStandard = mealStandard;
+    }
+
+    public MealStructure getMealStructure() {
+        return mealStructure;
+    }
+
+    public void setMealStructure(MealStructure mealStructure) {
+        this.mealStructure = mealStructure;
     }
 
     public String getMealFrameId() {
