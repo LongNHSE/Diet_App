@@ -141,4 +141,23 @@ public class Food {
     public void setActive(Boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "_id='" + _id + '\'' +
+                ", typeId='" + typeId + '\'' +
+                ", foodName='" + foodName + '\'' +
+                ", size=" + size +
+                ", caloricintake=" + caloricintake +
+                ", carbohydrates=" + carbohydrates +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", fiber=" + fiber +
+                ", water=" + water +
+                ", icon='" + icon + '\'' +
+                ", description='" + description + '\'' +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

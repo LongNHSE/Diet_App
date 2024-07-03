@@ -14,4 +14,7 @@ public interface MealServiceImp {
     @GET("meal/day/{dayId}")
     public Call<ResponseDTO<List<Meal>>> getAllMealBasedOnDay(@Path("dayId") String dayId);
 
+    @GET("meal/{mealId}")
+    public Call<ResponseDTO<Meal>> getMealById(@Path("mealId") String mealId);
+
 }

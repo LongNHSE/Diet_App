@@ -6,52 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Title TextView -->
-<!--    <TextView-->
-<!--        android:id="@+id/title"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="left"-->
-<!--        android:text="Meal and Exercise Plan"-->
-<!--        android:textColor="#2F5233"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold" />-->
-
-    <!-- Day/Week Switch -->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:background="@drawable/switch_background"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:padding="4dp">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/day_switch"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="1dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@drawable/switch_selected"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="8dp"-->
-<!--            android:text="Day"-->
-<!--            android:textColor="#3C6255"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/week_switch"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="8dp"-->
-<!--            android:text="Week"-->
-<!--            android:textColor="#E0F0CC"-->
-<!--            android:textStyle="bold" />-->
-<!--    </LinearLayout>-->
-
     <!-- Date and Navigation -->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -193,6 +147,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:background="@drawable/exercise_background"
+                    android:onClick="navigateToMealInfo"
                     android:padding="10dp"
                     android:src="@drawable/search" />
 

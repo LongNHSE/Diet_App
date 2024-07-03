@@ -1,9 +1,11 @@
 package com.example.diet.meal.dto;
 
+import com.example.diet.food_detail.dto.FoodDetail;
 import com.example.diet.meal_frame.dto.MealFrame;
 import com.example.diet.meal_standard.dto.MealStandard;
 import com.example.diet.meal_structure.dto.MealStructure;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Meal {
@@ -27,12 +29,22 @@ public class Meal {
     private MealFrame mealFrame;
     private MealStandard mealStandard;
     private MealStructure mealStructure;
+    private ArrayList<FoodDetail> foodDetails;
+
+
+    public ArrayList<FoodDetail> getFoodDetails() {
+        return foodDetails;
+    }
+
+    public void setFoodDetails(ArrayList<FoodDetail> foodDetails) {
+        this.foodDetails = foodDetails;
+    }
 
     public Meal() {
     }
 
 
-    public Meal(String mealFrameId, String dayId, double totalCalstd, double carbohydratedstd, double fiberstd, double proteinstd, double fatstd, double waterstd, double totalCal, double carbohydrated, double fiber, double protein, double fat, double water, String _id, Date createdAt, Date updatedAt, MealFrame mealFrame, MealStandard mealStandard, MealStructure mealStructure) {
+    public Meal(String mealFrameId, String dayId, double totalCalstd, double carbohydratedstd, double fiberstd, double proteinstd, double fatstd, double waterstd, double totalCal, double carbohydrated, double fiber, double protein, double fat, double water, String _id, Date createdAt, Date updatedAt, MealFrame mealFrame, MealStandard mealStandard, MealStructure mealStructure, ArrayList<FoodDetail> foodDetails) {
         this.mealFrameId = mealFrameId;
         this.dayId = dayId;
         this.totalCalstd = totalCalstd;
@@ -53,6 +65,7 @@ public class Meal {
         this.mealFrame = mealFrame;
         this.mealStandard = mealStandard;
         this.mealStructure = mealStructure;
+        this.foodDetails = foodDetails;
     }
 
     public MealStandard getMealStandard() {
@@ -236,6 +249,9 @@ public class Meal {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", mealFrame=" + mealFrame +
+                ", mealStandard=" + mealStandard +
+                ", mealStructure=" + mealStructure +
+                ", foodDetails=" + foodDetails +
                 '}';
     }
 }

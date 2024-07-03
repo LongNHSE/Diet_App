@@ -186,6 +186,11 @@
                         android:textColor="#2F5233"
                         android:textSize="15sp" />
                 </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="navigateToMainActivity"
+                    />
 
                 <ImageView
                     android:id="@+id/search_1"
@@ -194,6 +199,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/exercise_background"
                     android:padding="10dp"
+                    android:onClick="navigateToMainActivity"
                     android:src="@drawable/search" />
 
             </LinearLayout>
