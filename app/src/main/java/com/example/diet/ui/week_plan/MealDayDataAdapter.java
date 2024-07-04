@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.diet.R;
 import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal_standard.dto.MealStandard;
@@ -43,6 +44,7 @@ public class MealDayDataAdapter extends RecyclerView.Adapter<DayPlanViewHolder> 
         holder.typeName2.setText(mealName);
         String combinedStrings = String.valueOf(mealList.get(position).getMealFrame().getIndex()) + " ingredients";
         holder.typeName3.setText(combinedStrings);
+//        Glide.with(holder.icon.getContext()).load(mealList.get(position).getMealFrame().getIcon()).into(holder.icon);
 //        String combinedStrings1 = mealList.get(position).getTotalCalstd() + " Calories";
 //        holder.typeName4.setText(combinedStrings1);
 //        String combinedStrings2 = mealList.get(position).getCarbohydrated() + " Carbs" + mealList.get(position).getFat() + "Fat" + mealList.get(position).getProtein() + "Protein";

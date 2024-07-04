@@ -1,6 +1,7 @@
 package com.example.diet.ui.week_plan;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ public class DayPlanViewHolder extends  RecyclerView.ViewHolder{
 //    ImageView icon;
     TextView typeName2;
    TextView typeName3;
+
+   ImageView icon;
 //    TextView typeName4;
 //    TextView typeName5;
     public DayPlanViewHolder(@NonNull View itemView) {
@@ -21,6 +24,7 @@ public class DayPlanViewHolder extends  RecyclerView.ViewHolder{
         typeName2 = itemView.findViewById(R.id.mealtypeName);
 //        icon = itemView.findViewById(R.id.img);
        typeName3 = itemView.findViewById(R.id.ingredients);
+        icon = itemView.findViewById(R.id.img);
 //        typeName4 = itemView.findViewById(R.id.total_calo);
 //        typeName5 = itemView.findViewById(R.id.total_ingre);
 

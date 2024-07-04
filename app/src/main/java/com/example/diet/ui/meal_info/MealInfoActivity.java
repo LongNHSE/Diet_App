@@ -61,6 +61,9 @@ public class MealInfoActivity extends AppCompatActivity {
 
                         bindingMealInfo.standardCaloMealInfo.setText(standardCaloriesText);
                         bindingMealInfo.totalCaloMealInfo.setText(totalCaloriesText);
+                        double coverage = (meal.getTotalCal() / meal.getTotalCalstd()) * 100;
+                        String coverageText = "Coverage: " + coverage + "%";
+                        bindingMealInfo.coverageCaloMealInfo.setText(coverageText);
                         updateUIWithMealInfo();
                     } else {
                         Log.e("MealInfoActivity", "Meal data is null");
