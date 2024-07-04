@@ -1,0 +1,71 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/de_york"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="5dp"
+        android:gravity="center_horizontal">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:id="@+id/food_image_meal_info"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_image"
+                android:clipToOutline="true"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/breakfast" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:background="@drawable/rectangle_background"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp">
+            <TextView
+                android:id="@+id/food_name_meal_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/chrome_white"
+                android:text="Meal Info" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="190dp"
+            android:background="@drawable/rectangle_background_chrome_white"
+            android:layout_height="100dp"
+            android:padding="8dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/food_description_meal_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mineral_green"
+                android:text="A dish typically consisting of vegetables, sliced cheese or meat, placed on or between slices of breadsdasdasdasdasdasdasdadasdqweqweqweqweqweqweqwe"
+                android:maxLines="5"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

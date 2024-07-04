@@ -15,7 +15,12 @@ public class FragmentPageAdapter extends FragmentStateAdapter {
     public FragmentPageAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
+    public void navigateToMainActivity() {
+        Log.d("MainActivity", "navigateToMainActivity");
 
+//        startActivity(new Intent(this, MealInfoActivity.class));
+//        finish();
+    }
     @NonNull
     @Override
     public Fragment createFragment(int position) {

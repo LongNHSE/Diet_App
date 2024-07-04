@@ -1,15 +1,18 @@
 package com.example.diet.ui.week_plan;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.diet.R;
+import com.example.diet.ui.meal_info.MealInfoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +50,13 @@ public class day_plan extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void navigateToMainActivity() {
+        Log.d("MainActivity", "navigateToMainActivity");
+
+//        startActivity(new Intent(this, MealInfoActivity.class));
+//        finish();
     }
 
     @Override
