@@ -3,9 +3,15 @@ package com.example.diet;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -53,6 +59,33 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        TextView signUpTextView = findViewById(R.id.sign_up_text_view);
+        String fullText = "Don’t have an account? Sign up";
+        SpannableString spannableString = new SpannableString(fullText);
+
+        ClickableSpan signUpClickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                // Redirect to SignUpActivity
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        // Set the color and clickable span for "Sign up"
+        int signUpStartIndex = fullText.indexOf("Sign up");
+        int signUpEndIndex = signUpStartIndex + "Sign up".length();
+        spannableString.setSpan(signUpClickableSpan, signUpStartIndex, signUpEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.mineral_green)), signUpStartIndex, signUpEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Set the text color for the rest of the text
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.black)), 0, signUpStartIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Apply the spannable string to the text view
+        signUpTextView.setText(spannableString);
+        signUpTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void showIncorrectCredentialsDialog() {
