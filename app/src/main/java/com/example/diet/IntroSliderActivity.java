@@ -119,7 +119,7 @@ public class IntroSliderActivity extends AppCompatActivity {
     }
 
     private void navigateToMainActivity() {
-        Intent intent = new Intent(IntroSliderActivity.this, MainActivity.class);
+        Intent intent = new Intent(IntroSliderActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

@@ -36,7 +36,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
-        style="@style/Widget.AppCompat.Button"
+        style="@style/CustomButtonStyle"
         android:layout_width="309dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/subtitle_textView"
