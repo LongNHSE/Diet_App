@@ -22,6 +22,7 @@ import com.example.diet.R;
 import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal.service.MealServiceImp;
 import com.example.diet.response.ResponseDTO;
+import com.example.diet.ui.meal_info.MealInfoActivity;
 import com.example.diet.util.RetrofitClient;
 
 import java.util.ArrayList;
@@ -119,7 +120,21 @@ public class day_plan extends Fragment {
         dayIndexTextView.setText("Day " + dayIndex);
         recyclerView = view.findViewById(R.id.rv_day_plan);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new MealDayDataAdapter(new ArrayList<>());
+        adapter = new MealDayDataAdapter(new ArrayList<>(), new MealDayDataAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String mealId) {
+                // Handle item click here, e.g., open detail activity with mealId
+                Log.d("day_plan", "Clicked meal ID: " + mealId);
+                Intent intent = new Intent(getActivity(), MealInfoActivity.class);
+                intent.putExtra("mealId", mealId);
+                startActivity(intent);
+            }
+
+            @Override
+            public Meal getMeal(int position) {
+                return null;
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         typeName4 = view.findViewById(R.id.total_calo);

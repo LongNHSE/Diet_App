@@ -32,17 +32,19 @@ public class MealDayDataAdapter extends RecyclerView.Adapter<DayPlanViewHolder> 
         this.listener = listener;
     }
     public interface OnItemClickListener {
-        void onItemClick(String mealId); // Change type based on your Meal ID type
+        void onItemClick(String mealId);
+        Meal getMeal(int position);
     }
-    private MealDayAdapter adapter;
-    public MealDayDataAdapter(List<Meal> mealList) {
+
+    public MealDayDataAdapter(List<Meal> mealList, OnItemClickListener listener) {
         this.mealList = mealList;
+        this.listener = listener;
     }
     @NonNull
     @Override
     public DayPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.day_plan_item, parent, false);
-        return new DayPlanViewHolder(view);
+        return new DayPlanViewHolder(view,listener, mealList);
     }
 
     @Override

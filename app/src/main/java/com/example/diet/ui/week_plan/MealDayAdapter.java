@@ -19,7 +19,8 @@ public class MealDayAdapter extends RecyclerView.Adapter<DayPlanViewHolder> {
     @Override
     public DayPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_day_plan, parent, false);
-        return new DayPlanViewHolder(view);
+//        return new DayPlanViewHolder(view);
+        return null;
     }
 
     @Override

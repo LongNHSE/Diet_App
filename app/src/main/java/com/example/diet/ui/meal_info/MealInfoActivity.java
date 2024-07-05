@@ -51,6 +51,7 @@ public class MealInfoActivity extends AppCompatActivity {
 
     private void setUpMealInfo() {
         MealServiceImp mealServiceImp = RetrofitClient.getClient(null).create(MealServiceImp.class);
+        mealId = getIntent().getStringExtra("mealId");
         Call<ResponseDTO<Meal>> call = mealServiceImp.getMealById(mealId);
         call.enqueue(new Callback<ResponseDTO<Meal>>() {
             @Override
