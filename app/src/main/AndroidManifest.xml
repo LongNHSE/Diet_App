@@ -27,6 +27,11 @@
             android:theme="@style/Theme.Diet" />
 
         <activity
+            android:name=".ui.all_diet.AllDietActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Diet" />
+
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity

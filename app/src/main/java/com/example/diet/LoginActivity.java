@@ -1,6 +1,7 @@
 package com.example.diet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -29,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 //import com.google.android.gms.common.SignInButton;
 //import com.google.android.gms.common.api.ApiException;
 //import com.google.android.gms.tasks.Task;
+import com.example.diet.ui.all_diet.AllDietActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 if (email.equals("huylong123") && password.equals("hello123")) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userId", "6658350de9d4a6c7ae89854c");
+                    editor.commit();
+
                     startActivity(intent);
                 } else {
                     showIncorrectCredentialsDialog();

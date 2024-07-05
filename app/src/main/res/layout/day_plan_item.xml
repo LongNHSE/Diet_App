@@ -72,6 +72,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/exercise_background"
                 android:padding="10dp"
+
                 android:src="@drawable/search" />
 
         </LinearLayout>

@@ -30,6 +30,8 @@ public class MealInfoActivity extends AppCompatActivity {
 
     Meal meal = new Meal();
     private ActivityMealInfoBinding binding;
+
+    private String mealId;
     private ContentMealInfoBinding bindingMealInfo;
 
     @Override
@@ -48,8 +50,8 @@ public class MealInfoActivity extends AppCompatActivity {
     }
 
     private void setUpMealInfo() {
-        MealServiceImp mealServiceImp = RetrofitClient.getClient().create(MealServiceImp.class);
-        Call<ResponseDTO<Meal>> call = mealServiceImp.getMealById("668405a6ea609f9dc38c01ac");
+        MealServiceImp mealServiceImp = RetrofitClient.getClient(null).create(MealServiceImp.class);
+        Call<ResponseDTO<Meal>> call = mealServiceImp.getMealById(mealId);
         call.enqueue(new Callback<ResponseDTO<Meal>>() {
             @Override
             public void onResponse(Call<ResponseDTO<Meal>> call, Response<ResponseDTO<Meal>> response) {

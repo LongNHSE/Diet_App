@@ -9,24 +9,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diet.R;
 
-public class DayPlanViewHolder extends  RecyclerView.ViewHolder{
+public class DayPlanViewHolder extends RecyclerView.ViewHolder {
     TextView typeName;
-//    ImageView icon;
     TextView typeName2;
-   TextView typeName3;
+    TextView typeName3;
+    ImageView icon;
 
-   ImageView icon;
-//    TextView typeName4;
-//    TextView typeName5;
     public DayPlanViewHolder(@NonNull View itemView) {
         super(itemView);
-       typeName = itemView.findViewById(R.id.activity);
+        typeName = itemView.findViewById(R.id.activity);
         typeName2 = itemView.findViewById(R.id.mealtypeName);
-//        icon = itemView.findViewById(R.id.img);
-       typeName3 = itemView.findViewById(R.id.ingredients);
+        typeName3 = itemView.findViewById(R.id.ingredients);
         icon = itemView.findViewById(R.id.img);
-//        typeName4 = itemView.findViewById(R.id.total_calo);
-//        typeName5 = itemView.findViewById(R.id.total_ingre);
 
+        // Set click listener for the itemView
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    // Notify the adapter of the click event
+                    ((MealDayDataAdapter.OnItemClickListener) itemView.getContext()).onItemClick(String.valueOf(position));
+                }
+            }
+        });
     }
 }

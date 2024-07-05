@@ -5,7 +5,7 @@ import com.example.diet.day.dto.Day;
 import java.util.Date;
 
 public class diet {
-    private String id;
+    private String _id;
     private String userId;
     private String preferenceId;
     private String activityLevelId;
@@ -24,8 +24,8 @@ public class diet {
     private Day day;
     // Getters and Setters
 
-    public diet(String id, String userId, String preferenceId, String activityLevelId, String goalId, int height, int weight, int duration, int main, int side, int session, int amountOfChange, boolean isActive, String status, Date createdAt, Date updatedAt, Day day) {
-        this.id = id;
+    public diet(String _id, String userId, String preferenceId, String activityLevelId, String goalId, int height, int weight, int duration, int main, int side, int session, int amountOfChange, boolean isActive, String status, Date createdAt, Date updatedAt, Day day) {
+        this._id = _id;
         this.userId = userId;
         this.preferenceId = preferenceId;
         this.activityLevelId = activityLevelId;
@@ -45,11 +45,11 @@ public class diet {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getUserId() {
@@ -183,7 +183,7 @@ public class diet {
     @Override
     public String toString() {
         return "DietDTO{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", userId='" + userId + '\'' +
                 ", preferenceId='" + preferenceId + '\'' +
                 ", activityLevelId='" + activityLevelId + '\'' +

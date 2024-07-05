@@ -106,7 +106,7 @@ public class week_plan extends Fragment {
     }
 
     private void fetchFoodType() {
-        FoodTypeServiceImp foodTypeService = RetrofitClient.getClient().create(FoodTypeServiceImp.class);
+        FoodTypeServiceImp foodTypeService = RetrofitClient.getClient(null).create(FoodTypeServiceImp.class);
         Call<ResponseDTO<List<food_type>>> call = foodTypeService.getAllFoodType();
         Log.d("week_plan", "fetchFoodType: " + call.request().url().toString());
         call.enqueue(new Callback<ResponseDTO<List<food_type>>>() {

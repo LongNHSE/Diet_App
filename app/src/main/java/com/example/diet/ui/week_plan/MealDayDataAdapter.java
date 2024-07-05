@@ -3,6 +3,7 @@ package com.example.diet.ui.week_plan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,14 @@ public class MealDayDataAdapter extends RecyclerView.Adapter<DayPlanViewHolder> 
     private List<MealStandard> mealStandardsList;
     private List<MealStructure> mealStructureList;
     private RecyclerView recyclerView;
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+    public interface OnItemClickListener {
+        void onItemClick(String mealId); // Change type based on your Meal ID type
+    }
     private MealDayAdapter adapter;
     public MealDayDataAdapter(List<Meal> mealList) {
         this.mealList = mealList;

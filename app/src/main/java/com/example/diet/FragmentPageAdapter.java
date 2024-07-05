@@ -12,24 +12,30 @@ import com.example.diet.ui.week_plan.day_plan;
 import com.example.diet.ui.week_plan.week_plan;
 
 public class FragmentPageAdapter extends FragmentStateAdapter {
-    public FragmentPageAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    private String userId;
+
+    private String dietId;
+    private int dayIndex = 1; // Initial day count
+
+    public FragmentPageAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, String userId,String dietId) {
         super(fragmentManager, lifecycle);
+        this.userId = userId;
+        this.dietId = dietId;
     }
+
     public void navigateToMainActivity() {
         Log.d("MainActivity", "navigateToMainActivity");
-
-//        startActivity(new Intent(this, MealInfoActivity.class));
-//        finish();
+        // startActivity(new Intent(this, MealInfoActivity.class));
+        // finish();
     }
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.d("FragmentPageAdapter", "Position: " + position);
-
         if (position == 0) {
-            return day_plan.newInstance("","");
+            return day_plan.newInstance(userId, dietId);
         } else {
-            return week_plan.newInstance("","");
+            return week_plan.newInstance(userId, dietId);
         }
     }
 

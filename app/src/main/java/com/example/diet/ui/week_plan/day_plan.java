@@ -1,6 +1,8 @@
 package com.example.diet.ui.week_plan;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,17 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.diet.R;
 import com.example.diet.meal.dto.Meal;
-import com.example.diet.meal_standard.dto.MealStandard;
-import com.example.diet.meal_structure.dto.MealStructure;
 import com.example.diet.meal.service.MealServiceImp;
-import com.example.diet.meal_frame.dto.MealFrame;
 import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
-import com.example.diet.ui.meal_info.MealInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,110 +43,152 @@ public class day_plan extends Fragment {
     private List<Meal> mealList;
     private TextView typeName4;
     private TextView typeName5;
-    private String dayid;
     private int index;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private TextView dayIndexTextView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int dayIndex = 1; // Initial day count
+    private String userId;
+
+    private String dietId;
+
+    private static final String ARG_USER_ID = "user_id";
+    private static final String ARG_DIET_ID = "diet_id";
+
+
     public day_plan() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment day_plan.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static day_plan newInstance(String param1, String param2) {
+    public static day_plan newInstance(String userId, String dietId) {
         day_plan fragment = new day_plan();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_USER_ID, userId);
+        args.putString(ARG_DIET_ID, dietId);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public void navigateToMainActivity() {
-        Log.d("MainActivity", "navigateToMainActivity");
-
-//        startActivity(new Intent(this, MealInfoActivity.class));
-//        finish();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            userId = getArguments().getString(ARG_USER_ID);
+            dietId = getArguments().getString(ARG_DIET_ID);
         }
+
+
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        adapter = new MealDayDataAdapter(new ArrayList<>());
-        recyclerView = view.findViewById(R.id.rv_day_plan);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        typeName4 = view.findViewById(R.id.total_calo);
-        typeName5 = view.findViewById(R.id.total_ingre);
-        fetchMeal();
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_day_plan, container, false);
+        View view = inflater.inflate(R.layout.fragment_day_plan, container, false);
+
+        // Find the increaseButton ImageView
+        ImageView increaseButton = view.findViewById(R.id.increaseButton);
+        ImageView decreseButton = view.findViewById(R.id.decreaseButton);
+
+
+        // Set an OnClickListener to handle clicks
+
+        // Set an OnClickListener to handle clicks
+        increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                increaseDayIndex(v);
+            }
+        });
+
+        decreseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decreaseDayIndex(v);
+            }
+        });
+
+        return view;
     }
+
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d("day_plan", "onViewCreatedddd: " + dietId);
+        dayIndexTextView = view.findViewById(R.id.day_index);
+        dayIndexTextView.setText("Day " + dayIndex);
+        recyclerView = view.findViewById(R.id.rv_day_plan);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new MealDayDataAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        typeName4 = view.findViewById(R.id.total_calo);
+        typeName5 = view.findViewById(R.id.total_ingre);
+
         fetchMeal();
 
     }
 
+    public void increaseDayIndex(View view) {
+        dayIndex++;
+        dayIndexTextView.setText("Day " + String.valueOf(dayIndex));
+        fetchMeal();
+    }
+
+    // Method to handle decrease step button click
+    public void decreaseDayIndex(View view) {
+        if (dayIndex > 1) {
+            dayIndex--;
+            dayIndexTextView.setText("Day " + String.valueOf(dayIndex));
+            fetchMeal();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchMeal();
+    }
 
     private void fetchMeal() {
-        MealServiceImp MealService = RetrofitClient.getClient().create(MealServiceImp.class);
-        Call<ResponseDTO<List<Meal>>> call = MealService.getAllMealBasedOnDay("668405a5ea609f9dc38c018f");
+        MealServiceImp mealService = RetrofitClient.getClient(null).create(MealServiceImp.class);
+        Log.d("day_plan", "UserId: " + userId);
+        Call<ResponseDTO<List<Meal>>> call = mealService.getAllMealBasedOnDietIdAndDayIndex(dietId, dayIndex);
         Log.d("day_plan", "fetchMeal: " + call.request().url().toString());
         call.enqueue(new Callback<ResponseDTO<List<Meal>>>() {
             @Override
-            public void onResponse(@NonNull  Call<ResponseDTO<List<Meal>>> call, @NonNull Response<ResponseDTO<List<Meal>>> response) {
-                Log.d("day_plan", "Response: " + response.body());
-                List<Meal> mealList = response.body().getData();
-                Log.d("day_plan", "onResponse: " + mealList);
-                adapter.updateData(mealList);
-                updateTextViews(mealList);
+            public void onResponse(@NonNull Call<ResponseDTO<List<Meal>>> call, @NonNull Response<ResponseDTO<List<Meal>>> response) {
+                if (response.body() != null) {
+                    List<Meal> mealList = response.body().getData();
+                    Log.d("day_plan", "onResponse: " + mealList);
+                    adapter.updateData(mealList);
+                    updateTextViews(mealList);
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseDTO<List<Meal>>> call, Throwable t) {
-
+            public void onFailure(@NonNull Call<ResponseDTO<List<Meal>>> call, @NonNull Throwable t) {
+                Log.e("day_plan", "onFailure: ", t);
             }
-
         });
+    }
 
-    }
     private void updateTextViews(List<Meal> mealList) {
-        // Logic to update typeName4 and typeName5 based on mealList data
-        String totalCalories = "";
-        String totalIngredients = "";
+        int totalCalories = 0;
+        int totalCarbs = 0;
+        int totalFat = 0;
+        int totalProtein = 0;
+
         for (Meal meal : mealList) {
-            totalCalories = meal.getTotalCalstd() + " Calories. "; // Assuming Meal has a getCalories() method
-            totalIngredients = meal.getCarbohydrated() + "g Carbs, " + meal.getFat() + "g Fat, " + meal.getProtein() + "g Protein. "; // Assuming Meal has a getIngredients() method
+            totalCalories += meal.getTotalCalstd(); // Assuming Meal has getTotalCalstd() method
+            totalCarbs += meal.getCarbohydrated(); // Assuming Meal has getCarbohydrated() method
+            totalFat += meal.getFat(); // Assuming Meal has getFat() method
+            totalProtein += meal.getProtein(); // Assuming Meal has getProtein() method
         }
-        typeName4.setText(String.valueOf(totalCalories));
-        typeName5.setText(String.valueOf(totalIngredients));
+
+        typeName4.setText(totalCalories + " Calories");
+        typeName5.setText(totalCarbs + "g Carbs, " + totalFat + "g Fat, " + totalProtein + "g Protein");
     }
+
+
 }

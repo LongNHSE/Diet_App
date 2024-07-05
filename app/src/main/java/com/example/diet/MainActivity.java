@@ -1,11 +1,15 @@
 package com.example.diet;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +25,34 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.example.diet.diet.dto.diet;
+import com.example.diet.diet.service.DietServiceImp;
+import com.example.diet.response.ResponseDTO;
 import com.example.diet.ui.meal_info.MealInfoActivity;
+import com.example.diet.ui.week_plan.day_plan;
+import com.example.diet.util.RetrofitClient;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
 
+    private day_plan dayPlanFragment;
+
+    private String userId;
+
+    private String dietId;
+
     private FragmentPageAdapter adapter;
     private static final int REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 1;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -53,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -73,7 +93,20 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab);
         viewPager2 = findViewById(R.id.view_page);
 
-        adapter = new FragmentPageAdapter(getSupportFragmentManager(), getLifecycle());
+        SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        userId = preferences.getString("userId", "0");
+
+        getLatestDiet();
+        if (dietId == null) {
+            //Redirect to Create diet
+//            Intent intent = new Intent(this, CreateDietActivity.class);
+        }
+
+
+    }
+
+    public void renderFragment() {
+        adapter = new FragmentPageAdapter(getSupportFragmentManager(), getLifecycle(), userId, dietId);
         viewPager2.setAdapter(adapter);
 
         TabLayout.Tab tap1 = tabLayout.newTab();
@@ -94,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     textView.setText("Meal Plan");
                 }
+
             }
 
             @Override
@@ -106,5 +140,42 @@ public class MainActivity extends AppCompatActivity {
                 // Handle tab reselected
             }
         });
+    }
+
+    public void getLatestDiet() {
+
+        SharedPreferences preferences = getSharedPreferences("jwt", Context.MODE_PRIVATE);
+        String jwt = preferences.getString("jwt", null);
+
+        // Get latest diet from server
+        DietServiceImp dietServiceImp = RetrofitClient.getClient("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU4MzUwZGU5ZDRhNmM3YWU4OTg1NGMiLCJpYXQiOjE3MjAyMDMwNDYsImV4cCI6MTcyMDgwNzg0Nn0.Io-61XowSbv6BWDFzio4k3K1yNNorYDq117GRStX2xk").create(DietServiceImp.class);
+        Call<ResponseDTO<diet>> call = dietServiceImp.getLatestDiet();
+
+        call.enqueue(new Callback<ResponseDTO<diet>>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseDTO<diet>> call, @NonNull Response<ResponseDTO<diet>> response) {
+                Log.d("MainActivity", "Diettttttt: " + response.body().getData());
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("MainActivity", "Diettttttt: " + response.body().getData());
+                    diet diet = response.body().getData();
+
+                    if (diet != null) {
+                        Log.d("MainActivity", "Diettttttt: " + diet);
+                        dietId = diet.getId();
+                        renderFragment();
+                    } else {
+                        dietId = null;
+                    }
+                } else {
+                    Log.e("MainActivity", "Response unsuccessful or body is null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDTO<diet>> call, Throwable t) {
+                Log.e("MainActivity", "onFailure: " + t.getMessage());
+            }
+        });
+
     }
 }
