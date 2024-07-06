@@ -22,7 +22,7 @@
         android:layout_marginTop="20dp"
         android:text="What is your current weight?"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -30,20 +30,45 @@
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_below="@id/question"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:progressDrawable="@drawable/custom_progress_bar"
         android:max="4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:progressDrawable="@drawable/custom_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <NumberPicker
-        android:id="@+id/weightPicker"
+    <LinearLayout
+        android:id="@+id/weightPickersContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
+        <NumberPicker
+            android:id="@+id/weightPickerInteger"
+            android:layout_width="120dp"
+            android:layout_height="190dp"
+            android:layout_marginEnd="8dp" />
+
+        <NumberPicker
+            android:id="@+id/weightPickerDecimal"
+            android:layout_width="120dp"
+            android:layout_height="190dp"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/liveWeightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weightPickersContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="75.0 kg"
+        android:textColor="@color/mineral_green"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 </RelativeLayout>
