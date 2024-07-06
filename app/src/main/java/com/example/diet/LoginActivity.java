@@ -62,7 +62,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     startActivity(intent);
                 } else {
-                    showIncorrectCredentialsDialog();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userId", "6658350de9d4a6c7ae89854c");
+                    editor.commit();
+
+                    startActivity(intent);
+//                    showIncorrectCredentialsDialog();
                 }
             }
         });

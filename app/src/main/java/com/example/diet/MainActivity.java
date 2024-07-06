@@ -154,13 +154,10 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseDTO<diet>>() {
             @Override
             public void onResponse(@NonNull Call<ResponseDTO<diet>> call, @NonNull Response<ResponseDTO<diet>> response) {
-                Log.d("MainActivity", "Diettttttt: " + response.body().getData());
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("MainActivity", "Diettttttt: " + response.body().getData());
                     diet diet = response.body().getData();
 
                     if (diet != null) {
-                        Log.d("MainActivity", "Diettttttt: " + diet);
                         dietId = diet.getId();
                         renderFragment();
                     } else {

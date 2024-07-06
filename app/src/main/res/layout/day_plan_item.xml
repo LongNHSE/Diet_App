@@ -77,17 +77,4 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:columnCount="3"
-        android:orientation="horizontal">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_day_plan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </GridLayout>
 </LinearLayout>

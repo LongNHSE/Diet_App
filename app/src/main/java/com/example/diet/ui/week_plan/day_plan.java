@@ -167,14 +167,12 @@ public class day_plan extends Fragment {
 
     private void fetchMeal() {
         MealServiceImp mealService = RetrofitClient.getClient(null).create(MealServiceImp.class);
-        Log.d("day_plan", "UserId: " + userId);
         Call<ResponseDTO<List<Meal>>> call = mealService.getAllMealBasedOnDietIdAndDayIndex(dietId, dayIndex);
-        Log.d("day_plan", "fetchMeal: " + call.request().url().toString());
         call.enqueue(new Callback<ResponseDTO<List<Meal>>>() {
             @Override
             public void onResponse(@NonNull Call<ResponseDTO<List<Meal>>> call, @NonNull Response<ResponseDTO<List<Meal>>> response) {
                 if (response.body() != null) {
-                    List<Meal> mealList = response.body().getData();
+                    mealList = response.body().getData();
                     Log.d("day_plan", "onResponse: " + mealList);
                     adapter.updateData(mealList);
                     updateTextViews(mealList);
