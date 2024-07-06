@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Image above the question -->
     <ImageView
         android:id="@+id/questionImage"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/stage3" /> <!-- Replace with your actual drawable resource -->
+        android:src="@drawable/stage3" />
 
     <TextView
         android:id="@+id/question"
@@ -23,7 +22,7 @@
         android:layout_marginTop="20dp"
         android:text="What is your height?"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -31,20 +30,32 @@
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_below="@id/question"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:progressDrawable="@drawable/custom_progress_bar"
         android:max="4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:progressDrawable="@drawable/custom_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <NumberPicker
         android:id="@+id/heightPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="190dp"
         android:layout_below="@id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/liveHeightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/heightPicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="175 cm"
+        android:textColor="@color/mineral_green"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
