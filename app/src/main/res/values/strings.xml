@@ -45,9 +45,9 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
-    <string-array name="goal_options">
-        <item>Lose weight</item>
-        <item>Maintain health</item>
-        <item>Gain weight</item>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
     </string-array>
 </resources>
