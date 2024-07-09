@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/pale_goldenrod"
     tools:context=".SignUpActivity">
-
 
     <ImageView
         android:id="@+id/back_arrow"
@@ -31,7 +29,6 @@
         android:text="Register account"
         android:textSize="20sp"
         android:textStyle="bold" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -79,12 +76,49 @@
                     android:paddingStart="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Phone Label -->
+            <TextView
+                android:id="@+id/label_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/username"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Phone"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Phone Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone"
+                style="@style/CustomTextInputLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_phone"
+                android:layout_margin="16dp"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:drawablePadding="10dp"
+                    android:hint="Enter your phone"
+                    android:inputType="phone"
+                    android:paddingStart="16dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Email Label -->
             <TextView
                 android:id="@+id/label_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/username"
+                android:layout_below="@id/phone"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Email"
@@ -192,42 +226,158 @@
                     android:paddingStart="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Terms and Policy Checkbox -->
-            <CheckBox
-                android:id="@+id/checkbox_terms"
+            <!-- Gender Label -->
+            <TextView
+                android:id="@+id/gender_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/confirm_password"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:buttonTint="@color/mineral_green"
-                android:text="I understood the terms &amp; policy" />
+                android:text="Gender"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <!-- Gender PowerSpinnerView -->
+            <com.skydoves.powerspinner.PowerSpinnerView
+                android:id="@+id/gender_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_label"
+                android:layout_margin="16dp"
+                android:background="@drawable/spinner_background"
+                android:gravity="center"
+                android:hint="Select Gender"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="14.5sp"
+                app:spinner_arrow_gravity="end"
+                app:spinner_arrow_padding="8dp"
+                app:spinner_divider_color="@color/white"
+                app:spinner_divider_show="true"
+                app:spinner_divider_size="0.4dp"
+                app:spinner_popup_animation="dropdown"
+                app:spinner_popup_background="@color/pale_goldenrod"
+                app:spinner_popup_elevation="14dp" />
+
+            <!-- Date of Birth Label -->
+            <TextView
+                android:id="@+id/label_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_spinner"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Date of Birth"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Date of Birth Spinners -->
+            <LinearLayout
+                android:id="@+id/date_of_birth_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_dob"
+                android:layout_margin="16dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/day_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:gravity="center"
+                    android:hint="Day"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="14.5sp"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8dp"
+                    app:spinner_divider_color="@color/white"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.4dp"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@color/pale_goldenrod"
+                    app:spinner_popup_elevation="14dp" />
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/month_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:gravity="center"
+                    android:hint="Month"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="14.5sp"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8dp"
+                    app:spinner_divider_color="@color/white"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.4dp"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@color/pale_goldenrod"
+                    app:spinner_popup_elevation="14dp" />
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/year_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_background"
+                    android:gravity="center"
+                    android:hint="Year"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="14.5sp"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8dp"
+                    app:spinner_divider_color="@color/white"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.4dp"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@color/pale_goldenrod"
+                    app:spinner_popup_elevation="14dp" />
+            </LinearLayout>
+
+            <!-- Sign Up Button -->
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/signupButton"
+                android:id="@+id/sign_up_button"
                 style="@style/CustomButtonStyle"
                 android:layout_width="309dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/checkbox_terms"
+                android:layout_below="@id/date_of_birth_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_custom_background"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="Get Started"
+                android:text="Register"
                 android:textColor="@color/white" />
 
+            <!-- Continue with TextView -->
             <TextView
                 android:id="@+id/continue_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/signupButton"
+                android:layout_below="@id/sign_up_button"
                 android:layout_centerHorizontal="true"
                 android:layout_marginVertical="20dp"
                 android:text="Or continue with"
                 android:textColor="@color/gray"
                 android:textSize="15sp" />
 
+            <!-- Google Sign In Button -->
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/google_sign_in_button"
                 android:layout_width="309dp"
@@ -236,6 +386,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="16dp" />
 
+            <!-- Log In TextView -->
             <TextView
                 android:id="@+id/log_in_text_view"
                 android:layout_width="wrap_content"
@@ -250,6 +401,5 @@
 
         </RelativeLayout>
     </ScrollView>
-
 
 </RelativeLayout>

@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.diet.auth.dto.LoginRequest;
 import com.example.diet.auth.dto.LoginResponse;
 import com.example.diet.auth.services.AuthService;
 import com.example.diet.response.ResponseDTO;
-import com.example.diet.user.dto.User;
 import com.example.diet.util.RetrofitClient;
 import com.google.gson.Gson;
 
@@ -49,18 +53,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        setupSignUpTextView();
+    }
+
+    private void setupSignUpTextView() {
         TextView signUpTextView = findViewById(R.id.sign_up_text_view);
-        signUpTextView.setOnClickListener(new View.OnClickListener() {
+        String text = "Don’t have an account? Sign up";
+        SpannableString spannableString = new SpannableString(text);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View widget) {
                 navigateToSignUp();
             }
-        });
+        };
+
+        int startIndex = text.indexOf("Sign up");
+        int endIndex = startIndex + "Sign up".length();
+
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.mineral_green)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        signUpTextView.setText(spannableString);
+        signUpTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void loginUser() {
-        String username = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        String username = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         LoginRequest loginRequest = new LoginRequest(username, password);
 
@@ -72,10 +97,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseDTO<LoginResponse>> call, Response<ResponseDTO<LoginResponse>> response) {
                 if (response.isSuccessful()) {
                     ResponseDTO<LoginResponse> responseDTO = response.body();
-                    if (responseDTO != null && responseDTO.getStatusCode() == 200) {
-                        saveUserData(responseDTO.getData());
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        navigateToMainActivity();
+                    if (responseDTO != null) {
+                        if (responseDTO.getStatusCode() == 200) {
+                            saveUserData(responseDTO.getData());
+                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                            navigateToMainActivity();
+                        } else if (responseDTO.getStatusCode() == 404) {
+                            Toast.makeText(LoginActivity.this, "Login failed: Password is incorrect", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login failed: " + responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         showIncorrectCredentialsDialog();
                     }
@@ -86,11 +117,11 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseDTO<LoginResponse>> call, Throwable t) {
-                Log.e("LoginActivity", "onFailure: " + t.getMessage());
-                Toast.makeText(LoginActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "An error occurred: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void saveUserData(LoginResponse loginResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -98,26 +129,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user", new Gson().toJson(loginResponse.getUser()));
         editor.putString("userId", loginResponse.getUser().get_id());
         editor.apply();
-
-        // Check and log stored user data
-//        checkStoredUserData();
-    }
-
-    private void checkStoredUserData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-        String refreshToken = sharedPreferences.getString("refreshToken", null);
-        String userJson = sharedPreferences.getString("user", null);
-        String userId = sharedPreferences.getString("userId", null);
-
-        if (refreshToken != null && userJson != null && userId != null) {
-            User user = new Gson().fromJson(userJson, User.class);
-            Log.d("LoginActivity", "Refresh Token: " + refreshToken);
-            Log.d("LoginActivity", "User ID: " + userId);
-            Log.d("LoginActivity", "User: " + user.toString());
-            Toast.makeText(this, "User data stored successfully!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "No user data found.", Toast.LENGTH_LONG).show();
-        }
     }
 
     private void navigateToMainActivity() {
