@@ -52,6 +52,9 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity android:name=".ExerciseDetailActivity" />
+        <activity
+            android:name=".GoalSetupActivity"
+            android:exported="false" />
 
     </application>
 

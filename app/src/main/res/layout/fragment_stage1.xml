@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Image above the question -->
+    <ImageView
+        android:id="@+id/questionImage"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/stage1" /> <!-- Replace with your actual drawable resource -->
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="What is your goal?"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/question"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:progressDrawable="@drawable/custom_progress_bar"
+        android:max="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/goalOptionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
+
+        <TextView
+            android:id="@+id/optionLoseWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Lose weight"
+            android:textColor="@color/black"
+            android:layout_marginVertical="30dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@drawable/unselected_background"/>
+
+        <TextView
+            android:id="@+id/optionMaintainHealth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Maintain health"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginVertical="30dp"
+            android:background="@drawable/unselected_background"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/optionGainWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Gain weight"
+            android:textColor="@color/black"
+            android:layout_marginVertical="30dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@drawable/unselected_background"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

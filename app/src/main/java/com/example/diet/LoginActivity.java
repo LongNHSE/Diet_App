@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText emailEditText;
     private TextInputEditText passwordEditText;
     private Button loginButton;
+    private Button testGoalSetupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.email_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
         loginButton = findViewById(R.id.loginButton);
+        testGoalSetupButton = findViewById(R.id.testGoalSetupButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +73,14 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
 //                    showIncorrectCredentialsDialog();
                 }
+            }
+        });
+
+        testGoalSetupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, GoalSetupActivity.class);
+                startActivity(intent);
             }
         });
 

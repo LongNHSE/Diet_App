@@ -58,6 +58,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.android.gms:play-services-auth:19.2.0")
-
+    implementation("com.github.skydoves:powerspinner:1.2.7")
 
 }
