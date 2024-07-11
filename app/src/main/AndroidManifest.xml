@@ -54,8 +54,19 @@
         <activity android:name=".ExerciseDetailActivity" />
         <activity
             android:name=".GoalSetupActivity"
-            android:exported="false" />
-
+            android:exported="true" />
+        <activity
+            android:name=".BMISuccessActivity"
+            android:exported="true" />
+        <activity
+            android:name=".GoalSuccessActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BMISetupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".GoalWeightActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
