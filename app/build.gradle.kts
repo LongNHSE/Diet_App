@@ -61,5 +61,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.2.0")
     implementation("com.github.skydoves:powerspinner:1.2.7")
     implementation("com.google.android.material:material:1.4.0")
-
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("dev.shreyaspatil.MaterialDialog:MaterialDialog:2.2.3")
+    implementation("com.google.android.material:material:1.0.0")
+    implementation("com.airbnb.android:lottie:3.3.6")
 }

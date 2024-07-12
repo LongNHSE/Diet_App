@@ -20,14 +20,11 @@ public class RetrofitClient {
         }
 
 
-            Log.d("RetrofitClient", "AuthInterceptor added with token: " + authToken);
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(httpClient.build())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            Log.d("RetrofitClient", "Retrofit instance created with base URL: " + BASE_URL);
-
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         return retrofit;
     }
