@@ -67,6 +67,9 @@
         <activity
             android:name=".GoalWeightActivity"
             android:exported="true" />
+        <activity
+            android:name=".GeneratingPlanActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
