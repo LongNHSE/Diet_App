@@ -18,8 +18,8 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
 
     public FoodViewHolder(@NonNull View itemView) {
         super(itemView);
-        foodName = itemView.findViewById(R.id.foodName);
-        icon = itemView.findViewById(R.id.foodImage);
-        size = itemView.findViewById(R.id.size);
+//        foodName = itemView.findViewById(R.id.foodName);
+//        icon = itemView.findViewById(R.id.foodImage);
+//        size = itemView.findViewById(R.id.size);
     }
 }

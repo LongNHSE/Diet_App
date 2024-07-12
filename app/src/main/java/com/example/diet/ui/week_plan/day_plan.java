@@ -90,10 +90,6 @@ public class day_plan extends Fragment {
         ImageView increaseButton = view.findViewById(R.id.increaseButton);
         ImageView decreseButton = view.findViewById(R.id.decreaseButton);
 
-
-        // Set an OnClickListener to handle clicks
-
-        // Set an OnClickListener to handle clicks
         increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +130,7 @@ public class day_plan extends Fragment {
             public Meal getMeal(int position) {
                 return null;
             }
-        });
+        }, getContext());
         recyclerView.setAdapter(adapter);
 
         typeName4 = view.findViewById(R.id.total_calo);

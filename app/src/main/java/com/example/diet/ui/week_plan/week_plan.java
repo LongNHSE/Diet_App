@@ -1,5 +1,6 @@
 package com.example.diet.ui.week_plan;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,8 @@ import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal.service.MealServiceImp;
 import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
+import com.example.diet.week_item.dto.WeekItem;
+import com.example.diet.week_item.service.WeekItemImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +46,9 @@ public class week_plan extends Fragment {
 
     private RecyclerView recyclerView;
     private FoodTypeWeekDataAdapter adapter;
+
+    private int weekIndex = 1;
+    private TextView weekIndexTextView;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -83,7 +91,17 @@ public class week_plan extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new FoodTypeWeekDataAdapter(new ArrayList<>());
+        adapter = new FoodTypeWeekDataAdapter(new ArrayList<>(), getContext(),
+                new OnItemClickListener2() {
+                    @Override
+                    public void onItemClick(String id) {
+                        Log.d("TAG", "onItemClick: " + id);
+                        //Intent intent = new Intent(getContext(), MealInfoActivity.class);
+                    }
+                }
+        );
+        weekIndexTextView = view.findViewById(R.id.week_index);
+        weekIndexTextView.setText("Week " + String.valueOf(weekIndex));
         recyclerView = view.findViewById(R.id.rv_week_plan);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -99,30 +117,64 @@ public class week_plan extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_week_plan, container, false);
+
+        ImageView increaseButton = view.findViewById(R.id.increaseButtonWeek);
+        ImageView decreseButton = view.findViewById(R.id.decreaseButtonWeek);
+
+        increaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                increaseWeekIndex(v);
+            }
+        });
+
+        decreseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decreaseWeekIndex(v);
+            }
+        });
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_week_plan, container, false);
+        return view;
+    }
+
+    private void decreaseWeekIndex(View v) {
+        if (weekIndex > 1) {
+            weekIndex--;
+            weekIndexTextView.setText("Week " + String.valueOf(weekIndex));
+            fetchFoodType();
+        }
+    }
+
+    private void increaseWeekIndex(View v) {
+        weekIndex++;
+        weekIndexTextView.setText("Week " + String.valueOf(weekIndex));
+        fetchFoodType();
     }
 
     private void fetchFoodType() {
-        FoodTypeServiceImp foodTypeService = RetrofitClient.getClient(null).create(FoodTypeServiceImp.class);
-        Call<ResponseDTO<List<food_type>>> call = foodTypeService.getAllFoodType();
-        Log.d("week_plan", "fetchFoodType: " + call.request().url().toString());
-        call.enqueue(new Callback<ResponseDTO<List<food_type>>>() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_prefs", getContext().MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String dietId = sharedPreferences.getString("dietId", "");
+        WeekItemImp weekItemImp = RetrofitClient.getClient(token).create(WeekItemImp.class);
+        Call<ResponseDTO<List<WeekItem>>> call = weekItemImp.getWeekItem(dietId, weekIndex);
+        call.enqueue(new Callback<ResponseDTO<List<WeekItem>>>() {
             @Override
-            public void onResponse(@NonNull  Call<ResponseDTO<List<food_type>>> call, @NonNull  Response<ResponseDTO<List<food_type>>> response) {
-                Log.d("week_plan", "Response: " + response.body());
-                List<food_type> foodTypeList = response.body().getData();
-                Log.d("week_plan", "onResponse: " + foodTypeList);
-                adapter.updateData(foodTypeList);
-
+            public void onResponse(Call<ResponseDTO<List<WeekItem>>> call, Response<ResponseDTO<List<WeekItem>>> response) {
+                if (response.body().getData() != null) {
+                    List<WeekItem> weekItemList = response.body().getData();
+                    adapter.updateData(weekItemList);
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseDTO<List<food_type>>> call, Throwable t) {
+            public void onFailure(Call<ResponseDTO<List<WeekItem>>> call, Throwable t) {
 
             }
+
 
         });
     }

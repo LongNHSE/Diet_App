@@ -11,8 +11,12 @@ import com.example.diet.R;
 public class WeekPlanViewHolder extends  RecyclerView.ViewHolder{
     TextView typeName;
 
+    RecyclerView rvWeekPlanItemDetail;
+
+
     public WeekPlanViewHolder(@NonNull View itemView) {
         super(itemView);
         typeName = itemView.findViewById(R.id.typeName);
+        rvWeekPlanItemDetail = itemView.findViewById(R.id.rv_week_plan_item_detail);
     }
 }

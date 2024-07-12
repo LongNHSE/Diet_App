@@ -1,5 +1,6 @@
 package com.example.diet.ui.week_plan;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.diet.R;
 import com.example.diet.meal.dto.Meal;
 
@@ -20,12 +22,15 @@ public class MealDayDataAdapter extends RecyclerView.Adapter<DayPlanViewHolder> 
     private List<Meal> mealList;
     private OnItemClickListener listener;
 
+    private Context context;
+
     public interface OnItemClickListener {
         void onItemClick(String mealId);
         Meal getMeal(int position);
     }
 
-    public MealDayDataAdapter(List<Meal> mealList, OnItemClickListener listener) {
+    public MealDayDataAdapter(List<Meal> mealList, OnItemClickListener listener, Context context) {
+        this.context = context;
         this.mealList = mealList;
         this.listener = listener;
     }
@@ -45,6 +50,13 @@ public class MealDayDataAdapter extends RecyclerView.Adapter<DayPlanViewHolder> 
         holder.typeName2.setText(mealName);
         String combinedStrings = String.valueOf(mealList.get(position).getMealFrame().getIndex()) + " ingredients";
         holder.typeName3.setText(combinedStrings);
+
+        // Set image
+        Glide.with(context)
+                .load(mealList.get(position).getMealStandard().getImage())
+                .placeholder(R.drawable.lunch) // Add a placeholder if you have one
+                .error(R.drawable.breakfast) // Add an error image if you have one
+                .into(holder.icon);
     }
 
     @Override

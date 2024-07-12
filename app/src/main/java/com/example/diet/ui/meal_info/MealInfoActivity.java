@@ -88,6 +88,16 @@ public class MealInfoActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_meal_info);
         if (recyclerView != null) {
             MealInfoAdapter adapter = new MealInfoAdapter(this, meal.getFoodDetails());
+
+
+            adapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(String id) {
+                    Log.d("FoodDetail", "Food: " + id);
+                    // Handle the click event here
+                }
+            });
+
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         } else {

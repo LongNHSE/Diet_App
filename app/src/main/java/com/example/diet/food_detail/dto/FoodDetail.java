@@ -9,6 +9,8 @@ public class FoodDetail {
     private String _id;
     private String mealId;
     private String foodId;
+
+    private String name;
     private double amount;
     private double totalCal;
     private double carborhydrated;
@@ -43,6 +45,8 @@ public class FoodDetail {
         this.updatedAt = updatedAt;
         this.food = food;
     }
+
+
 
     // Getters and setters for each field
 
@@ -124,6 +128,22 @@ public class FoodDetail {
 
     public void setWater(double water) {
         this.water = water;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getIcon() {
