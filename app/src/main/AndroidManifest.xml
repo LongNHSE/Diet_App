@@ -38,7 +38,7 @@
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".ExerciseDetailActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,11 +51,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity android:name=".ExerciseDetailActivity" />
+<!--        <activity android:name=".ExerciseDetailActivity" />-->
         <activity
             android:name=".GoalSetupActivity"
             android:exported="false" />
 
     </application>
+
 
 </manifest>
