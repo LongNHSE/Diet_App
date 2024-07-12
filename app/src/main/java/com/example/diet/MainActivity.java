@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab);
         viewPager2 = findViewById(R.id.view_page);
 
-        SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         userId = preferences.getString("userId", "0");
 
         getLatestDiet();
@@ -144,11 +144,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void getLatestDiet() {
 
-        SharedPreferences preferences = getSharedPreferences("jwt", Context.MODE_PRIVATE);
-        String jwt = preferences.getString("jwt", null);
+        SharedPreferences preferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        String jwt = preferences.getString("token", null);
+        Log.d("MainActivity", "JWT: " + jwt);
 
         // Get latest diet from server
-        DietServiceImp dietServiceImp = RetrofitClient.getClient("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU4MzUwZGU5ZDRhNmM3YWU4OTg1NGMiLCJpYXQiOjE3MjAyMDMwNDYsImV4cCI6MTcyMDgwNzg0Nn0.Io-61XowSbv6BWDFzio4k3K1yNNorYDq117GRStX2xk").create(DietServiceImp.class);
+        DietServiceImp dietServiceImp = RetrofitClient.getClient(jwt).create(DietServiceImp.class);
+
+
         Call<ResponseDTO<diet>> call = dietServiceImp.getLatestDiet();
 
         call.enqueue(new Callback<ResponseDTO<diet>>() {
@@ -159,12 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
                     if (diet != null) {
                         dietId = diet.getId();
+                        preferences.edit().putString("dietId", dietId).apply();
+                        Log.d("MainActivity", "Diet ID: " + dietId);
                         renderFragment();
                     } else {
                         dietId = null;
                     }
                 } else {
-                    Log.e("MainActivity", "Response unsuccessful or body is null");
+                    Log.e("MainActivity", "Response unsuccessful or body is null" + response);
                 }
             }
 

@@ -10,17 +10,28 @@ public class MealStandard {
     private Date createdAt;
     private Date updatedAt;
 
+    private String image;
+
 
     public MealStandard() {
     }
 
-    public MealStandard(String name, String displayTime, boolean isActive, String _id, Date createdAt, Date updatedAt) {
+    public MealStandard(String name, String displayTime, boolean isActive, String _id, Date createdAt, Date updatedAt, String image) {
         this.name = name;
         this.displayTime = displayTime;
         this.isActive = isActive;
         this._id = _id;
         this.createdAt = createdAt;
+        this.image = image;
         this.updatedAt = updatedAt;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {

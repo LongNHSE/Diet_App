@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void saveUserData(LoginResponse loginResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", loginResponse.getToken());
         editor.putString("refreshToken", loginResponse.getRefreshToken());
         editor.putString("user", new Gson().toJson(loginResponse.getUser()));
         editor.putString("userId", loginResponse.getUser().get_id());

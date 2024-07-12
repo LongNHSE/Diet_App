@@ -29,8 +29,7 @@ public class FoodWeekAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         holder.foodName.setText(typeName);
         holder.size.setText(foodList.get(position).getSize());
 //        holder.icon.setImage(foodList.get(position).getIcon());
-//        implementation 'com.github.bumptech.glide:glide:4.12.0'
-//        annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
     }
 
     @Override

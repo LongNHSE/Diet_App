@@ -13,18 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.diet.R;
-import com.example.diet.food.dto.Food;
 import com.example.diet.food_detail.dto.FoodDetail;
 
 import java.util.ArrayList;
 
 public class MealInfoAdapter extends RecyclerView.Adapter<MealInfoAdapter.MealInfoViewHolder> {
-    Context context;
-    ArrayList<FoodDetail> foodList;
+    private Context context;
+    private ArrayList<FoodDetail> foodList;
+    private OnItemClickListener listener;
 
     public MealInfoAdapter(Context context, ArrayList<FoodDetail> foodList) {
         this.context = context;
         this.foodList = foodList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -32,16 +36,14 @@ public class MealInfoAdapter extends RecyclerView.Adapter<MealInfoAdapter.MealIn
     public MealInfoAdapter.MealInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.meal_info_card, parent, false);
-        return new MealInfoAdapter.MealInfoViewHolder(view);
+        return new MealInfoAdapter.MealInfoViewHolder(view, listener, foodList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MealInfoAdapter.MealInfoViewHolder holder, int position) {
         FoodDetail food = foodList.get(position);
-        Log.d("FoodDetail", "Food: " + foodList.size());
 
-
-        holder.foodName.setText( food.getFood().getFoodName());
+        holder.foodName.setText(food.getFood().getFoodName());
         holder.description.setText(food.getDescription());
         Glide.with(context)
                 .load(food.getIcon())
@@ -60,11 +62,21 @@ public class MealInfoAdapter extends RecyclerView.Adapter<MealInfoAdapter.MealIn
         ImageView foodImage;
         TextView foodName, description;
 
-        public MealInfoViewHolder(@NonNull View itemView) {
+        public MealInfoViewHolder(@NonNull View itemView, OnItemClickListener listener,ArrayList<FoodDetail> foodList) {
             super(itemView);
             foodImage = itemView.findViewById(R.id.food_image_meal_info);
             foodName = itemView.findViewById(R.id.food_name_meal_info);
             description = itemView.findViewById(R.id.food_description_meal_info);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onItemClick(foodList.get(position).get_id());
+                    }
+                }
+            });
         }
     }
 }
