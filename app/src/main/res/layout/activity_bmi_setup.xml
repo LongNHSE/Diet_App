@@ -13,7 +13,7 @@
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/stage1" />
+        android:src="@drawable/bmi" />
 
     <TextView
         android:id="@+id/question"
@@ -22,12 +22,14 @@
         android:layout_below="@id/questionImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Give us your current weight and height"
+        android:gravity="center"
+        android:text="Please provide us your  current weight and height"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/weight_input"
+        style="@style/CustomTextInputLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/question"
@@ -48,6 +50,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/height_input"
+        style="@style/CustomTextInputLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/weight_input"

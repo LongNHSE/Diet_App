@@ -66,6 +66,7 @@ public class BMISetupActivity extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("currentWeight", weight);
+                    editor.putFloat("userBMI", (float) bmiResponse.getBmi());
                     editor.apply();
 
                     Intent intent = new Intent(BMISetupActivity.this, BMISuccessActivity.class);

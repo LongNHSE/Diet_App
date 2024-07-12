@@ -5,8 +5,10 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
@@ -16,6 +18,7 @@ public class BMISuccessActivity extends AppCompatActivity {
     private TextView bmiCategory;
     private TextView bmiValue;
     private MaterialButton continueButton;
+    private MaterialButton previousButton;
     private double bmi;
     private String userId;
     private String token;
@@ -29,6 +32,7 @@ public class BMISuccessActivity extends AppCompatActivity {
         bmiCategory = findViewById(R.id.bmiCategory);
         bmiValue = findViewById(R.id.bmiValue);
         continueButton = findViewById(R.id.continueButton);
+        previousButton = findViewById(R.id.previousButton);
 
         bmi = getIntent().getDoubleExtra("BMI_VALUE", 0.0);
         userId = getIntent().getStringExtra("userId");
@@ -38,6 +42,14 @@ public class BMISuccessActivity extends AppCompatActivity {
 
         continueButton.setOnClickListener(v -> {
             Intent intent = new Intent(BMISuccessActivity.this, GoalSetupActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("token", token);
+            startActivity(intent);
+            finish();
+        });
+
+        previousButton.setOnClickListener(v -> {
+            Intent intent = new Intent(BMISuccessActivity.this, BMISetupActivity.class);
             intent.putExtra("userId", userId);
             intent.putExtra("token", token);
             startActivity(intent);
@@ -71,10 +83,10 @@ public class BMISuccessActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(imageResId)
-                .override(600, 600) // Resize the image to 600x600 pixels
+                .override(600, 600)
                 .into(successImage);
 
         bmiCategory.setText(bmiText);
-        bmiValue.setText(String.format("Your BMI is: %.2f", bmi)); // Display the BMI value
+        bmiValue.setText(String.format("Your BMI is: %.2f", bmi));
     }
 }

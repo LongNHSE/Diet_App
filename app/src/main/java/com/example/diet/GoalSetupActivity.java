@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.diet.goal.dto.GoalResponse;
 import com.example.diet.goal.services.GoalService;
@@ -36,6 +36,7 @@ public class GoalSetupActivity extends AppCompatActivity {
     private String selectedGoalId;
     private String selectedGoalName;
     private int currentWeight;
+    private float userBMI;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class GoalSetupActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
         currentWeight = sharedPreferences.getInt("currentWeight", 0); // Assume the current weight is stored
+        userBMI = sharedPreferences.getFloat("userBMI", 0.0f); // Assume the BMI is stored
 
         goalService = RetrofitClient.getClient(token).create(GoalService.class);
         fetchGoals();
@@ -91,14 +93,37 @@ public class GoalSetupActivity extends AppCompatActivity {
                     break;
             }
         }
+        applyBMIRules();
+    }
+
+    private void applyBMIRules() {
+        if (userBMI >= 25.0) { // Fat or obese
+            optionGainWeight.setEnabled(false);
+            optionGainWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        } else if (userBMI < 18.5) { // Skinny
+            optionLoseWeight.setEnabled(false);
+            optionLoseWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        }
     }
 
     private void handleGoalSelection(String goalName, int goalSign, String goalId) {
         selectedGoalSign = goalSign;
         selectedGoalId = goalId;
         selectedGoalName = goalName;
-        optionGainWeight.setBackgroundResource(goalName.equals("Gain") ? R.drawable.selected_background : R.drawable.unselected_background);
-        optionLoseWeight.setBackgroundResource(goalName.equals("Lose") ? R.drawable.selected_background : R.drawable.unselected_background);
+
+        // Ensure the disabled options retain their gray background
+        if (userBMI >= 25.0) { // Fat or obese
+            optionGainWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        } else {
+            optionGainWeight.setBackgroundResource(goalName.equals("Gain") ? R.drawable.selected_background : R.drawable.unselected_background);
+        }
+
+        if (userBMI < 18.5) { // Skinny
+            optionLoseWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        } else {
+            optionLoseWeight.setBackgroundResource(goalName.equals("Lose") ? R.drawable.selected_background : R.drawable.unselected_background);
+        }
+
         optionMaintainHealth.setBackgroundResource(goalName.equals("Maintenance") ? R.drawable.selected_background : R.drawable.unselected_background);
     }
 

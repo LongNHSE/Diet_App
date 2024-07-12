@@ -127,6 +127,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs(String username, String phone, String email, String password, String confirmPassword) {
+        clearInputErrors();
+
         if (username.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             return false;
@@ -134,15 +136,25 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Invalid email format");
+            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (!password.equals(confirmPassword)) {
             confirmPasswordEditText.setError("Passwords do not match");
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
+    }
+
+    private void clearInputErrors() {
+        usernameEditText.setError(null);
+        phoneEditText.setError(null);
+        emailEditText.setError(null);
+        passwordEditText.setError(null);
+        confirmPasswordEditText.setError(null);
     }
 
     private void signUpUser() {
@@ -200,6 +212,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        Toast.makeText(SignUpActivity.this, "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -221,9 +234,6 @@ public class SignUpActivity extends AppCompatActivity {
         editor.apply();
     }
 
-
-
-
     private void navigateToBMISetupActivity(SignUpResponse signUpResponse) {
         Intent intent = new Intent(SignUpActivity.this, BMISetupActivity.class);
         intent.putExtra("userId", signUpResponse.getUser().get_id());
@@ -231,7 +241,6 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
     private void navigateToLogIn() {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
