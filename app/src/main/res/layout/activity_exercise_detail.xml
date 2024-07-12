@@ -49,9 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Exercise Info"
-                android:textColor="@android:color/black"
+                android:textColor="#3C6255"
                 android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
         </LinearLayout>
 
@@ -67,17 +68,18 @@
                 android:id="@+id/exercise_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textColor="#61876E"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/exercise_calories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textColor="#61876E"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
 <!--            <TextView-->
 <!--                android:layout_width="wrap_content"-->
@@ -96,10 +98,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/exerciseInfoCard"
         android:layout_marginTop="7dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginRight="25dp"
         android:text="Facts About Your Exercise"
-        android:textColor="@android:color/black"
+        android:textColor="#3C6255"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -109,8 +111,8 @@
         android:layout_height="0dp"
         android:layout_below="@id/factsTitle"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         android:paddingBottom="30dp">
 
         <LinearLayout
@@ -123,10 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-
+                android:textColor="#61876E"
+                android:textSize="16sp"
+                />
         </LinearLayout>
     </ScrollView>
 

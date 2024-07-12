@@ -2,6 +2,9 @@ package com.example.diet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.BulletSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -93,7 +96,14 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         exerciseName.setText(exName);
         exerciseCalories.setText(String.valueOf(exercise.getCalorexp()) + " kcal");
-        exerciseDescription.setText(exercise.getDescription());
+
+        // Split the description into lines with dashes
+        String[] descriptionParts = exercise.getDescription().split("\\.\\s+");
+        StringBuilder descriptionWithDashes = new StringBuilder();
+        for (String part : descriptionParts) {
+            descriptionWithDashes.append("- ").append(part.trim()).append("\n\n");
+        }
+        exerciseDescription.setText(descriptionWithDashes.toString().trim());
 
         Glide.with(this)
                 .load(exercise.getIcon())
