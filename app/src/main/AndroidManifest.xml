@@ -70,6 +70,8 @@
         <activity
             android:name=".GeneratingPlanActivity"
             android:exported="true" />
+        <activity android:name=".BlogActivity"  />
+        <activity android:name=".BlogDetailActivity" />
     </application>
 
 
