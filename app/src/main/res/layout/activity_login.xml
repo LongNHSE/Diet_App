@@ -136,20 +136,5 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-    <!-- Test Button to go to Goal Setup -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/testGoalSetupButton"
-        style="@style/CustomButtonStyle"
-        android:layout_width="309dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sign_up_text_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_custom_background"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:text="Test Goal Setup"
-        android:textColor="@color/white" />
-
 
 </RelativeLayout>

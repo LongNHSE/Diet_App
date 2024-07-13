@@ -1,5 +1,6 @@
-
 package com.example.diet.util;
+
+import android.util.Log;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -18,14 +19,13 @@ public class RetrofitClient {
             httpClient.addInterceptor(new AuthInterceptor(authToken));
         }
 
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(httpClient.build())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         return retrofit;
     }
 }
-

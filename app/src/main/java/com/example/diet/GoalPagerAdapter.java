@@ -5,31 +5,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.diet.goal.dto.GoalResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class GoalPagerAdapter extends FragmentStateAdapter {
 
-    public GoalPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    private final List<Fragment> fragmentList = new ArrayList<>();
+
+    public GoalPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<GoalResponse> goals) {
         super(fragmentActivity);
+        fragmentList.add(new Stage1Fragment(goals));
+        fragmentList.add(new Stage2Fragment());
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new Stage1Fragment();
-            case 1:
-                return new Stage2Fragment();
-            case 2:
-                return new Stage3Fragment();
-            case 3:
-                return new Stage4Fragment();
-            default:
-                return new Stage1Fragment();
-        }
+        return fragmentList.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return fragmentList.size();
     }
 }

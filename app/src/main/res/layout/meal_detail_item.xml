@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meal_detail_item_for_week_plan"
+    android:layout_width="130dp"
+    android:layout_height="150dp"
     android:layout_gravity="center"
+    android:gravity="center"
     android:layout_margin="10dp"
     android:background="@drawable/rectangle_background_chrome_white"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="1dp">
 
     <TextView
-        android:id="@+id/foodName"
+        android:id="@+id/food_name_week_plan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/mineral_green"
+        android:textStyle="bold"
+        android:textSize="15dp"
         android:text="Vegetable oil"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
-    <ImageView
-        android:id="@+id/foodImage"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:src="@drawable/calories" />
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="10dp"
+        android:layout_marginVertical="10dp"
+        app:cardElevation="4dp">
+<!--        <ImageView-->
+<!--            android:id="@+id/food_image_week_plan"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:src="@drawable/calories" />-->
+        <ImageView
+            android:id="@+id/food_image_week_plan"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+
+            android:src="@drawable/meal_info" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/size"
+        android:id="@+id/size_week_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="200g"
+        android:textColor="@color/mineral_green"
+        android:textStyle="bold"
+        android:textSize="15dp"
         android:textAlignment="center" />
 </LinearLayout>

@@ -1,101 +1,149 @@
 package com.example.diet;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.diet.goal.dto.GoalResponse;
+import com.example.diet.goal.services.GoalService;
+import com.example.diet.response.ResponseDTO;
+import com.example.diet.util.RetrofitClient;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GoalSetupActivity extends AppCompatActivity {
 
-    private ViewPager2 viewPager;
-    private GoalPagerAdapter adapter;
-    private ProgressBar progressBar;
-    private MaterialButton nextStepButton;
-    private MaterialButton backStepButton;
+    private TextView optionGainWeight;
+    private TextView optionLoseWeight;
+    private TextView optionMaintainHealth;
+    private MaterialButton btnCompleteGoal;
+
+    private SharedPreferences sharedPreferences;
+    private GoalService goalService;
+    private int selectedGoalSign;
+    private String selectedGoalId;
+    private String selectedGoalName;
+    private int currentWeight;
+    private float userBMI;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal_setup);
 
-        viewPager = findViewById(R.id.viewPager);
-        adapter = new GoalPagerAdapter(this);
-        viewPager.setAdapter(adapter);
+        optionGainWeight = findViewById(R.id.optionGainWeight);
+        optionLoseWeight = findViewById(R.id.optionLoseWeight);
+        optionMaintainHealth = findViewById(R.id.optionMaintainHealth);
+        btnCompleteGoal = findViewById(R.id.btnComplete);
 
-        // Disable user input for ViewPager2
-        viewPager.setUserInputEnabled(false);
+        btnCompleteGoal.setOnClickListener(v -> navigateToGoalWeight());
 
-        progressBar = findViewById(R.id.progressBar);
-        nextStepButton = findViewById(R.id.btnNext);
-        backStepButton = findViewById(R.id.btnPrevious);
+        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", null);
+        currentWeight = sharedPreferences.getInt("currentWeight", 0); // Assume the current weight is stored
+        userBMI = sharedPreferences.getFloat("userBMI", 0.0f); // Assume the BMI is stored
 
-        nextStepButton.setOnClickListener(v -> goToNextStage());
-        backStepButton.setOnClickListener(v -> goToPreviousStage());
+        goalService = RetrofitClient.getClient(token).create(GoalService.class);
+        fetchGoals();
+    }
 
-        updateProgress();
-
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+    private void fetchGoals() {
+        Call<ResponseDTO<List<GoalResponse>>> call = goalService.getGoals();
+        call.enqueue(new Callback<ResponseDTO<List<GoalResponse>>>() {
             @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                updateButtonsState(position);
+            public void onResponse(Call<ResponseDTO<List<GoalResponse>>> call, Response<ResponseDTO<List<GoalResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<GoalResponse> goals = response.body().getData();
+                    setupGoalOptions(goals);
+                } else {
+                    Toast.makeText(GoalSetupActivity.this, "Failed to fetch goals", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDTO<List<GoalResponse>>> call, Throwable t) {
+                Toast.makeText(GoalSetupActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void goToNextStage() {
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem < adapter.getItemCount() - 1) {
-            viewPager.setCurrentItem(currentItem + 1);
-            updateProgress();
-        } else {
-            completeSetup();
+    private void setupGoalOptions(List<GoalResponse> goals) {
+        for (GoalResponse goal : goals) {
+            switch (goal.getGoalName()) {
+                case "Gain":
+                    optionGainWeight.setOnClickListener(v -> handleGoalSelection(goal.getGoalName(), goal.getSign(), goal.getId()));
+                    break;
+                case "Lose":
+                    optionLoseWeight.setOnClickListener(v -> handleGoalSelection(goal.getGoalName(), goal.getSign(), goal.getId()));
+                    break;
+                case "Maintenance":
+                    optionMaintainHealth.setOnClickListener(v -> handleGoalSelection(goal.getGoalName(), goal.getSign(), goal.getId()));
+                    break;
+            }
+        }
+        applyBMIRules();
+    }
+
+    private void applyBMIRules() {
+        if (userBMI >= 25.0) { // Fat or obese
+            optionGainWeight.setEnabled(false);
+            optionGainWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        } else if (userBMI < 18.5) { // Skinny
+            optionLoseWeight.setEnabled(false);
+            optionLoseWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         }
     }
 
-    public void goToPreviousStage() {
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem > 0) {
-            viewPager.setCurrentItem(currentItem - 1);
-            updateProgress();
-        }
-    }
+    private void handleGoalSelection(String goalName, int goalSign, String goalId) {
+        selectedGoalSign = goalSign;
+        selectedGoalId = goalId;
+        selectedGoalName = goalName;
 
-    public void completeSetup() {
-        // Handle setup completion
-        // For example, navigate to another activity or save the data
-    }
-
-    private void updateProgress() {
-        int currentItem = viewPager.getCurrentItem();
-        progressBar.setProgress(currentItem + 1);
-        if (currentItem == adapter.getItemCount() - 1) {
-            nextStepButton.setText("Complete");
+        // Ensure the disabled options retain their gray background
+        if (userBMI >= 25.0) { // Fat or obese
+            optionGainWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         } else {
-            nextStepButton.setText("Next Step");
-        }
-    }
-
-    private void updateButtonsState(int position) {
-        if (position == 0) {
-            backStepButton.setEnabled(false);
-            backStepButton.setTextColor(ContextCompat.getColor(this, R.color.gray));
-            backStepButton.setStrokeColor(ContextCompat.getColorStateList(this, R.color.gray));
-        } else {
-            backStepButton.setEnabled(true);
-            backStepButton.setTextColor(ContextCompat.getColor(this, R.color.mineral_green));
-            backStepButton.setStrokeColor(ContextCompat.getColorStateList(this, R.color.mineral_green));
+            optionGainWeight.setBackgroundResource(goalName.equals("Gain") ? R.drawable.selected_background : R.drawable.unselected_background);
         }
 
-        if (position == adapter.getItemCount() - 1) {
-            nextStepButton.setText("Complete");
+        if (userBMI < 18.5) { // Skinny
+            optionLoseWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         } else {
-            nextStepButton.setText("Next Step");
+            optionLoseWeight.setBackgroundResource(goalName.equals("Lose") ? R.drawable.selected_background : R.drawable.unselected_background);
+        }
+
+        optionMaintainHealth.setBackgroundResource(goalName.equals("Maintenance") ? R.drawable.selected_background : R.drawable.unselected_background);
+    }
+
+    private void navigateToGoalWeight() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("goalSign", selectedGoalSign);
+        editor.putString("goalId", selectedGoalId);
+        editor.putString("goalName", selectedGoalName);
+        editor.apply();
+
+        if (selectedGoalSign == 0) {
+            Intent intent = new Intent(GoalSetupActivity.this, GoalSuccessActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(GoalSetupActivity.this, GoalWeightActivity.class);
+            intent.putExtra("goalSign", selectedGoalSign);
+            intent.putExtra("currentWeight", currentWeight);
+            startActivity(intent);
+            finish();
         }
     }
 }

@@ -28,6 +28,7 @@ import com.example.diet.util.RetrofitClient;
 import com.google.gson.Gson;
 import com.skydoves.powerspinner.PowerSpinnerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -65,12 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
         yearSpinner.setItems(getYears());
         genderSpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.gender_array)));
 
-        findViewById(R.id.sign_up_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUpUser();
-            }
-        });
+        findViewById(R.id.sign_up_button).setOnClickListener(v -> signUpUser());
 
         sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
 
@@ -80,12 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void setupBackButton() {
         ImageView backArrow = findViewById(R.id.back_arrow);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backArrow.setOnClickListener(v -> finish());
     }
 
     private void setupLogInTextView() {
@@ -136,6 +127,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs(String username, String phone, String email, String password, String confirmPassword) {
+        clearInputErrors();
+
         if (username.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             return false;
@@ -143,15 +136,25 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Invalid email format");
+            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (!password.equals(confirmPassword)) {
             confirmPasswordEditText.setError("Passwords do not match");
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
+    }
+
+    private void clearInputErrors() {
+        usernameEditText.setError(null);
+        phoneEditText.setError(null);
+        emailEditText.setError(null);
+        passwordEditText.setError(null);
+        confirmPasswordEditText.setError(null);
     }
 
     private void signUpUser() {
@@ -193,18 +196,24 @@ public class SignUpActivity extends AppCompatActivity {
                         if (signUpResponse != null) {
                             saveUserData(signUpResponse);
                             Toast.makeText(SignUpActivity.this, "Sign Up successful", Toast.LENGTH_SHORT).show();
-                            navigateToMainActivity();
+                            navigateToBMISetupActivity(signUpResponse);
                         } else {
                             Toast.makeText(SignUpActivity.this, "Sign Up failed: Empty response data", Toast.LENGTH_SHORT).show();
                         }
-                    } else if (responseDTO.getStatusCode() == 409) { // Assuming 409 is the status code for conflict/duplicate
-                        Toast.makeText(SignUpActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(SignUpActivity.this, "Sign Up failed: " + responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Log.d("SignUpActivity", "Response Error: " + response.errorBody());
-                    Toast.makeText(SignUpActivity.this, "Sign Up failed", Toast.LENGTH_SHORT).show();
+                    try {
+                        String errorMessage = response.errorBody().string();
+                        Log.d("SignUpActivity", "Response Error: " + errorMessage);
+                        Gson gson = new Gson();
+                        ResponseDTO errorResponse = gson.fromJson(errorMessage, ResponseDTO.class);
+                        Toast.makeText(SignUpActivity.this, errorResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(SignUpActivity.this, "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -219,13 +228,16 @@ public class SignUpActivity extends AppCompatActivity {
     private void saveUserData(SignUpResponse signUpResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("refreshToken", signUpResponse.getRefreshToken());
+        editor.putString("token", signUpResponse.getToken()); // Save the token
         editor.putString("user", new Gson().toJson(signUpResponse.getUser()));
         editor.putString("userId", signUpResponse.getUser().get_id());
         editor.apply();
     }
 
-    private void navigateToMainActivity() {
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+    private void navigateToBMISetupActivity(SignUpResponse signUpResponse) {
+        Intent intent = new Intent(SignUpActivity.this, BMISetupActivity.class);
+        intent.putExtra("userId", signUpResponse.getUser().get_id());
+        intent.putExtra("token", signUpResponse.getToken());
         startActivity(intent);
         finish();
     }
