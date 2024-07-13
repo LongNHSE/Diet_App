@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         setupSignUpTextView();
+
+        // Setup the new button for ingredients page
+        setupIngredientPageButton();
     }
 
     private void setupSignUpTextView() {
@@ -122,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     private void saveUserData(LoginResponse loginResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", loginResponse.getToken());
@@ -145,5 +147,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showIncorrectCredentialsDialog() {
         Toast.makeText(this, "Login failed: Incorrect username or password", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setupIngredientPageButton() {
+        Button ingredientPageButton = findViewById(R.id.ingredientPageButton);
+        ingredientPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToIngredientPage();
+            }
+        });
+    }
+
+    private void navigateToIngredientPage() {
+        Intent intent = new Intent(LoginActivity.this, BlogActivity.class);
+        startActivity(intent);
     }
 }
