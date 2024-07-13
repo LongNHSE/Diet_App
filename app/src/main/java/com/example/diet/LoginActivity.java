@@ -150,13 +150,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupIngredientPageButton() {
-        Button ingredientPageButton = findViewById(R.id.ingredientPageButton);
-        ingredientPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToIngredientPage();
-            }
-        });
+//        Button ingredientPageButton = findViewById(R.id.ingredientPageButton);
+//        ingredientPageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navigateToIngredientPage();
+//            }
+//        });
     }
 
     private void navigateToIngredientPage() {

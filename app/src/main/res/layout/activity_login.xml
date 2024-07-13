@@ -137,18 +137,18 @@
         android:textStyle="bold" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ingredientPageButton"
-        style="@style/CustomButtonStyle"
-        android:layout_width="309dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/testGoalSetupButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_custom_background"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:text="Go to Ingredients"
-        android:textColor="@color/white" />
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/ingredientPageButton"-->
+<!--        style="@style/CustomButtonStyle"-->
+<!--        android:layout_width="309dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/testGoalSetupButton"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="@drawable/button_custom_background"-->
+<!--        android:paddingLeft="32dp"-->
+<!--        android:paddingRight="32dp"-->
+<!--        android:text="Go to Ingredients"-->
+<!--        android:textColor="@color/white" />-->
 
 </RelativeLayout>
