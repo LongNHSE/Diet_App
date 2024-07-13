@@ -55,7 +55,8 @@
         <activity
             android:name=".GoalSetupActivity"
             android:exported="false" />
-
+        <activity android:name=".BlogActivity"  />
+        <activity android:name=".BlogDetailActivity" />
     </application>
 
 </manifest>
