@@ -13,4 +13,6 @@
     <color name ="light_gray">#e0e0e0</color>
     <color name ="dark_green">#304D30</color>
     <color name="red">#FF0000</color>
+    <color name="medium_sea_green">#3CB371</color>
+    <color name="cornflower_blue">#6495ED</color>
 </resources>
