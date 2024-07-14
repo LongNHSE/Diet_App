@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,6 +63,25 @@ public class MealInfoActivity extends AppCompatActivity {
                     if (meal != null) {
                         String totalCaloriesText = "Calories: " + meal.getTotalCal();
                         String standardCaloriesText = "Standard Calories: " + meal.getTotalCalstd();
+                        ProgressBar circularProgressBar1 = findViewById(R.id.customCircularProgress1).findViewById(R.id.circularProgressBar);
+                        TextView progressText1 = findViewById(R.id.customCircularProgress1).findViewById(R.id.progressText);
+                        ProgressBar circularProgressBar2 = findViewById(R.id.customCircularProgress2).findViewById(R.id.circularProgressBar);
+                        TextView progressText2 = findViewById(R.id.customCircularProgress2).findViewById(R.id.progressText);
+                        ProgressBar circularProgressBar3 = findViewById(R.id.customCircularProgress3).findViewById(R.id.circularProgressBar);
+                        TextView progressText3 = findViewById(R.id.customCircularProgress3).findViewById(R.id.progressText);
+                        //        // Set progress values and text
+                        int progress1 = (int) ((meal.getTotalCal() / meal.getTotalCalstd()) * 100);
+                        circularProgressBar1.setProgress(progress1);
+                        progressText1.setText(progress1 + "%");
+
+                        int progress2 = formatNumber((int) ((meal.getProtein() / meal.getProteinstd()) * 100));
+                        circularProgressBar2.setProgress(progress2);
+                        progressText2.setText(progress2 + "%");
+
+                        int progress3 = formatNumber((int) ((meal.getFat() / meal.getFatstd()) * 100));
+                        circularProgressBar3.setProgress(progress3);
+                        progressText3.setText(progress3 + "%");
+
 
                         bindingMealInfo.standardCaloMealInfo.setText(standardCaloriesText);
                         bindingMealInfo.totalCaloMealInfo.setText(totalCaloriesText);
@@ -103,5 +124,21 @@ public class MealInfoActivity extends AppCompatActivity {
         } else {
             Log.e("MealInfoActivity", "RecyclerView is null");
         }
+    }
+
+    public static int formatNumber(int number) {
+        // Determine the number of digits in the number
+        int length = (int) Math.log10(number) + 1;
+
+        // Calculate the divisor to reduce the number to two digits
+        double divisor = Math.pow(10, length - 2);
+
+        // Divide the number by the divisor and round it
+        double result = Math.round(number / divisor);
+
+        // Convert the result to an integer to remove decimal places
+        int formattedNumber = (int) result;
+
+        return formattedNumber;
     }
 }

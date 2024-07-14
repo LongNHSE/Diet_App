@@ -62,6 +62,8 @@ public class MealInfoAdapter extends RecyclerView.Adapter<MealInfoAdapter.MealIn
         ImageView foodImage;
         TextView foodName, description;
 
+
+
         public MealInfoViewHolder(@NonNull View itemView, OnItemClickListener listener,ArrayList<FoodDetail> foodList) {
             super(itemView);
             foodImage = itemView.findViewById(R.id.food_image_meal_info);
