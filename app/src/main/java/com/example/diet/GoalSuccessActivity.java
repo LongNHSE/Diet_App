@@ -17,7 +17,7 @@ public class GoalSuccessActivity extends AppCompatActivity {
         finishButton = findViewById(R.id.finishButton);
 
         finishButton.setOnClickListener(v -> {
-            Intent intent = new Intent(GoalSuccessActivity.this, GeneratingPlanActivity.class);
+            Intent intent = new Intent(GoalSuccessActivity.this, ActivityLevelSelectionActivity.class);
             startActivity(intent);
             finish();
         });

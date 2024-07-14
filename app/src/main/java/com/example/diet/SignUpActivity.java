@@ -120,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
     private List<String> getYears() {
         List<String> years = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = 1900; i <= currentYear; i++) {
+        for (int i = 1980; i <= currentYear; i++) {
             years.add(String.valueOf(i));
         }
         return years;

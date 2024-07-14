@@ -75,6 +75,12 @@
             android:exported="true" />
         <activity android:name=".BlogActivity" />
         <activity android:name=".BlogDetailActivity" />
+        <activity
+            android:name=".ActivityLevelSelectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ActivityLevelSuccessActivity"
+            android:exported="true" />
     </application>
 
 
