@@ -81,6 +81,12 @@
         <activity
             android:name=".ActivityLevelSuccessActivity"
             android:exported="true" />
+        <activity
+            android:name=".PreferenceSliderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PreferenceSuccessActivity"
+            android:exported="true" />
     </application>
 
 

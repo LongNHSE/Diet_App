@@ -25,7 +25,7 @@ public class ActivityLevelSuccessActivity extends AppCompatActivity {
             // Log all shared preferences in JSON format
             logSharedPreferences(sharedPreferences);
 
-            Intent intent = new Intent(ActivityLevelSuccessActivity.this, GeneratingPlanActivity.class);
+            Intent intent = new Intent(ActivityLevelSuccessActivity.this, PreferenceSliderActivity.class);
             startActivity(intent);
             finish();
         });
