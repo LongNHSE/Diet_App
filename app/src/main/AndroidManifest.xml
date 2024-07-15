@@ -30,6 +30,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.food_detail.FoodDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.food_fact.EntryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.meal_info.MealInfoActivity"
             android:exported="false"
             android:theme="@style/Theme.Diet" />

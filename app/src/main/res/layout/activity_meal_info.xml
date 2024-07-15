@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_host_fragment_content_meal_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".ui.meal_info.MealInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -20,7 +22,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="-5dp"
             app:cardCornerRadius="10dp"
@@ -28,14 +30,14 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="100dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/meal_info" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="150dp">
+                android:layout_marginTop="20dp">
 
                 <include
                     android:id="@+id/contentMealInfo"
@@ -45,30 +47,23 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="16dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:layout_constraintVertical_bias="0.0">
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -86,9 +81,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Carb"
                         android:textColor="@color/mineral_green"
-                        android:textSize="20dp"
-                        android:text="Carb" />
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -107,9 +102,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Protein"
                         android:textColor="@color/mineral_green"
-                        android:textSize="20dp"
-                        android:text="Protein" />
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -128,23 +123,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Fat"
                         android:textColor="@color/mineral_green"
-                        android:textSize="20dp"
-                        android:text="Fat" />
+                        android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!--            Header-->
+            <!-- Header -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
                 android:text="Fact About Your Meal"
                 android:textColor="@color/mineral_green"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!--            Content-->
+            <!-- Content -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_meal_info"
                 android:layout_width="match_parent"
@@ -154,8 +150,20 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2" />
 
+            <Button
+                android:id="@+id/generate_coze"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Get Recommendation"
+                android:onClick="onRecommendFood" />
+
+            <TextView
+                android:id="@+id/coze_response"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
         </LinearLayout>
-    </LinearLayout>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.diet.ui.week_plan;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,6 +24,8 @@ import com.example.diet.food_type.service.FoodTypeServiceImp;
 import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal.service.MealServiceImp;
 import com.example.diet.response.ResponseDTO;
+import com.example.diet.ui.food_detail.FoodDetailActivity;
+import com.example.diet.ui.meal_info.MealInfoActivity;
 import com.example.diet.util.RetrofitClient;
 import com.example.diet.week_item.dto.WeekItem;
 import com.example.diet.week_item.service.WeekItemImp;
@@ -96,7 +99,8 @@ public class week_plan extends Fragment {
                     @Override
                     public void onItemClick(String id) {
                         Log.d("TAG", "onItemClick: " + id);
-                        //Intent intent = new Intent(getContext(), MealInfoActivity.class);
+//                        Intent intent = new Intent(.this, FoodDetailActivity.class);
+//                        intent.putExtra("foodDetailId", id);
                     }
                 }
         );

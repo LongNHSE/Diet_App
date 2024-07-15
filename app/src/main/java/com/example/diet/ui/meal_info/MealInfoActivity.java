@@ -1,12 +1,17 @@
 package com.example.diet.ui.meal_info;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.example.diet.coze.dto.Message;
+import com.example.diet.coze.service.CozeBotService;
 import com.example.diet.databinding.ContentMealInfoBinding;
+import com.example.diet.food_detail.dto.FoodDetail;
 import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal.service.MealServiceImp;
 import com.example.diet.response.ResponseDTO;
+import com.example.diet.ui.food_detail.FoodDetailActivity;
 import com.example.diet.util.RetrofitClient;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -23,6 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diet.databinding.ActivityMealInfoBinding;
 import com.example.diet.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +56,7 @@ public class MealInfoActivity extends AppCompatActivity {
 //
         setSupportActionBar(binding.toolbar);
 
+
         setUpMealInfo();
     }
 
@@ -55,6 +64,7 @@ public class MealInfoActivity extends AppCompatActivity {
         MealServiceImp mealServiceImp = RetrofitClient.getClient(null).create(MealServiceImp.class);
         mealId = getIntent().getStringExtra("mealId");
         Call<ResponseDTO<Meal>> call = mealServiceImp.getMealById(mealId);
+        binding.generateCoze.setTag(mealId);
         call.enqueue(new Callback<ResponseDTO<Meal>>() {
             @Override
             public void onResponse(Call<ResponseDTO<Meal>> call, Response<ResponseDTO<Meal>> response) {
@@ -116,6 +126,10 @@ public class MealInfoActivity extends AppCompatActivity {
                 public void onItemClick(String id) {
                     Log.d("FoodDetail", "Food: " + id);
                     // Handle the click event here
+
+                    Intent intent = new Intent(MealInfoActivity.this, FoodDetailActivity.class);
+                    intent.putExtra("foodDetailId", id);
+                    startActivity(intent);
                 }
             });
 
@@ -141,4 +155,34 @@ public class MealInfoActivity extends AppCompatActivity {
 
         return formattedNumber;
     }
+
+    public void onRecommendFood(View view) {
+        CozeBotService cozeBotService = new CozeBotService();
+        ArrayList<FoodDetail> foodDetails = meal.getFoodDetails();
+
+        String[] ingredientList = new String[8];
+
+        for (int i = 0; i < foodDetails.size(); i++) {
+            ingredientList[i] = foodDetails.get(i).getFood().getFoodName();
+        }
+
+        cozeBotService.sendRequest(new CozeBotService.CozeBotCallback() {
+            @Override
+            public void onSuccess(List<Message> messages) {
+                TextView dish_view = binding.cozeResponse;
+                String response = messages.get(0).getContent();
+                Log.d("new value:", response);
+                dish_view.setText(response);
+                for (Message message : messages) {
+                    Log.d("Coze output", "Content: " + message.getContent());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("Coze output", "Request failed", t);
+            }
+        }, ingredientList);
+    }
+
 }

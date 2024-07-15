@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF"/> <!-- Change this to the desired color or make it transparent -->
+    <stroke
+        android:width="3dp"
+        android:color="#3C6255" />
+    <corners android:radius="100dp"/> <!-- Adjust this value to half the size of your ImageView -->
+</shape>

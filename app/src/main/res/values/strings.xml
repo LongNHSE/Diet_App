@@ -7,7 +7,21 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="facts_about_foods">Facts About Foods</string>
+    <string name="main_paragraph1">Custom diet and workout plans for your best health status</string>
+    <string name="main_paragraph2">Keep track of your meals to stay tuned with your regime</string>
+    <string name="LeRegime">LeRegime</string>
+    <string name="calories">Calories</string>
+    <string name="carbohydrate">Carbohydrate</string>
+    <string name="fiber">Fiber</string>
+    <string name="protein">Protein</string>
+    <string name="fat">Fat</string>
+    <string name="water">Water</string>
+    <string name="nutritional_values">Nutritional Values</string>
+    <string name="select_a_substitute">Select A Substitute</string>
+    <string name="substitute">Substitute</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
