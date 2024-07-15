@@ -1,67 +1,70 @@
-package com.example.diet;// CartAdapter.java
+package com.example.diet.ui.cart;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.diet.cart.dto.CartItem;
-
+import com.example.diet.R;
+import com.example.diet.cart.dto.Cart;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private List<CartItem> cartItemList;
     private Context context;
+    private List<Cart> cartList;
 
-    public CartAdapter(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
+    public CartAdapter(Context context, List<Cart> cartList) {
         this.context = context;
+        this.cartList = cartList;
     }
 
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart, parent, false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false);
         return new CartViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        CartItem cartItem = cartItemList.get(position);
-
-        holder.itemName.setText(cartItem.getItemName());
-        holder.itemPrice.setText(String.format("%,dđ", cartItem.getItemPrice())); // Format price as needed
-        holder.itemQuantity.setText(String.valueOf(cartItem.getQuantity()));
-
-        // Example: Increase and decrease button click listeners
-        holder.increaseButton.setOnClickListener(v -> {
-            // Handle increase quantity logic
-        });
-
-        holder.decreaseButton.setOnClickListener(v -> {
-            // Handle decrease quantity logic
-        });
-
-        holder.removeButton.setOnClickListener(v -> {
-            // Handle remove item logic
-        });
+        Cart cart = cartList.get(position);
+        if (cart.getProduct() != null) {
+            holder.itemName.setText(cart.getProduct().getProductName());
+            holder.itemPrice.setText(String.valueOf(cart.getUnitPrice()) + "đ");
+            holder.itemQuantity.setText(String.valueOf(cart.getQuantity()));
+            String[] images = cart.getProduct().getImages();
+            if (images != null && images.length > 0) {
+                Picasso.get().load(images[0]).into(holder.itemImage);
+            }
+        } else {
+            // Handle case where product is null (optional, depending on your logic)
+            holder.itemName.setText("Unknown Product");
+            holder.itemPrice.setText("");
+            holder.itemQuantity.setText("");
+            holder.itemImage.setImageDrawable(null);  // or set a default image
+        }
     }
 
     @Override
     public int getItemCount() {
-        return cartItemList.size();
+        return cartList.size();
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
+        ImageView itemImage;
         TextView itemName, itemPrice, itemQuantity;
         ImageButton increaseButton, decreaseButton, removeButton;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemImage = itemView.findViewById(R.id.itemImage);
             itemName = itemView.findViewById(R.id.itemName);
             itemPrice = itemView.findViewById(R.id.itemPrice);
             itemQuantity = itemView.findViewById(R.id.itemQuantity);
