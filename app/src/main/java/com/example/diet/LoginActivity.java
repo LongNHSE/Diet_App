@@ -22,9 +22,13 @@ import androidx.core.content.ContextCompat;
 import com.example.diet.auth.dto.LoginRequest;
 import com.example.diet.auth.dto.LoginResponse;
 import com.example.diet.auth.services.AuthService;
+import com.example.diet.bmi.dto.BMIResponse;
+import com.example.diet.bmi.services.BMIService;
 import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginResponse loginResponse = responseDTO.getData();
                         saveUserData(loginResponse);
                         Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        navigateToBMISetupActivity(loginResponse);
+                        checkUserBMIAndNavigate(loginResponse);
                     } else {
                         Toast.makeText(LoginActivity.this, "Login failed: " + responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -119,6 +123,33 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user", new Gson().toJson(loginResponse.getUser()));
         editor.putString("userId", loginResponse.getUser().get_id());
         editor.apply();
+    }
+
+    private void checkUserBMIAndNavigate(LoginResponse loginResponse) {
+        BMIService bmiService = RetrofitClient.getClient(loginResponse.getToken()).create(BMIService.class);
+        Call<ResponseDTO<List<BMIResponse>>> call = bmiService.getUserBMI();
+
+        call.enqueue(new Callback<ResponseDTO<List<BMIResponse>>>() {
+            @Override
+            public void onResponse(Call<ResponseDTO<List<BMIResponse>>> call, Response<ResponseDTO<List<BMIResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null && !response.body().getData().isEmpty()) {
+                    navigateToHome();
+                } else {
+                    navigateToBMISetupActivity(loginResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDTO<List<BMIResponse>>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Error checking BMI: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void navigateToBMISetupActivity(LoginResponse loginResponse) {
