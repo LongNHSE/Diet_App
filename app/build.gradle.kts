@@ -59,6 +59,10 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation ("androidx.cardview:cardview:1.0.0")
     implementation("com.google.android.gms:play-services-auth:19.2.0")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation("com.github.skydoves:powerspinner:1.2.7")

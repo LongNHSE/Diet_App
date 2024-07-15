@@ -1,17 +1,21 @@
 package com.example.diet;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diet.blog.dto.Blog;
 import com.example.diet.blog.dto.BlogResponse;
 import com.example.diet.blog.service.BlogService;
-import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
 
 import java.util.ArrayList;
@@ -21,18 +25,34 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BlogActivity extends AppCompatActivity {
+public class BlogFragment extends Fragment {
     private RecyclerView recyclerViewBlog;
     private List<Blog> blogList;
     private BlogAdapter blogAdapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blog);
+    public BlogFragment() {
+    }
 
-        recyclerViewBlog = findViewById(R.id.recyclerViewBlog);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+       return inflater.inflate(R.layout.activity_blog,container,false);
+
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerViewBlog =  requireActivity().findViewById(R.id.recyclerViewBlog);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( requireActivity());
         recyclerViewBlog.setLayoutManager(linearLayoutManager);
 
         blogList = new ArrayList<>();
@@ -58,13 +78,13 @@ public class BlogActivity extends AppCompatActivity {
                         blogAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    Toast.makeText(BlogActivity.this, "Failed to fetch blogs", Toast.LENGTH_SHORT).show();
+                    Toast.makeText( requireActivity(), "Failed to fetch blogs", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<BlogResponse<List<Blog>>> call, Throwable t) {
-                Toast.makeText(BlogActivity.this, "Failed to fetch blogs: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText( requireActivity(), "Failed to fetch blogs: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

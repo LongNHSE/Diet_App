@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".TextToSpeechActivity">
+
+    <TextView
+        android:id="@+id/blog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="1 lb chicken breast, cut into bite-sized pieces\n\n1 cup plain yogurt\n\n2 tablespoons lemon juice\n\n2 teaspoons ground cumin\n\n2 teaspoons ground coriander\n\n1 teaspoon ground turmeric\n\n1 teaspoon ground cayenne pepper\n\n1 teaspoon ground paprika\n\n1 teaspoon garam masala\n\n1 teaspoon salt\n\n2 tablespoons vegetable oil\n\n1 large onion, diced\n\n4 cloves garlic, minced\n\n1 tablespoon grated fresh ginger\n\n1 can (15 oz) tomato sauce\n\n1 cup heavy cream\n\nFresh cilantro, chopped, for garnish\n\nSteamed basmati rice, for serving" />
+
+    <Button
+        android:id="@+id/read_aloud_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Read Aloud" />
+</LinearLayout>

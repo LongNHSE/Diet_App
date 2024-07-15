@@ -25,7 +25,7 @@ public class DirectionAdapter extends RecyclerView.Adapter<DirectionAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String direction = directions.get(position);
         holder.textViewCount.setText(String.valueOf(position + 1));
         holder.textViewDirection.setText(direction);

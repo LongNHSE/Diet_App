@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainFragment.class);
         startActivity(intent);
         finish();
     }
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToIngredientPage() {
-        Intent intent = new Intent(LoginActivity.this, BlogActivity.class);
+        Intent intent = new Intent(LoginActivity.this, BlogFragment.class);
         startActivity(intent);
     }
 }

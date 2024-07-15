@@ -26,8 +26,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String ingredient = ingredients.get(position);
-        holder.textViewIngredient.setText(ingredient);
+        if (ingredient != null) {
+            holder.textViewIngredient.setText(ingredient);
+        } else {
+            holder.textViewIngredient.setText("N/A"); // Or handle it as per your requirement
+        }
     }
+
 
     @Override
     public int getItemCount() {
