@@ -14,18 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.diet.diet.dto.DietRequest;
-import com.example.diet.diet.dto.DietResponse;
-import com.example.diet.diet.service.DietServiceImp;
-import com.example.diet.response.ResponseDTO;
-import com.example.diet.util.RetrofitClient;
 import com.google.android.material.slider.Slider;
 import com.google.gson.Gson;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SetDietActivity extends AppCompatActivity {
 
@@ -53,16 +43,32 @@ public class SetDietActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         token = sharedPreferences.getString("token", null);
 
+        // Set the initial value of the duration slider to 1 and update the TextView
+        durationSlider.setValue(1);
+        durationValueTextView.setText("1 week");
+
         durationSlider.addOnChangeListener((slider, value, fromUser) -> {
             int weeks = (int) value;
-            durationValueTextView.setText(weeks + " weeks");
+            durationValueTextView.setText(weeks + " week" + (weeks > 1 ? "s" : ""));
         });
 
         updateAmountOfChange();
 
         saveButton.setOnClickListener(v -> {
             if (validateInputs()) {
-                sendDietToBackend();
+                Intent intent = new Intent(SetDietActivity.this, GeneratingPlanActivity.class);
+                intent.putExtra("activityLevelId", sharedPreferences.getString("activityLevelId", ""));
+                intent.putExtra("preferenceId", sharedPreferences.getString("selectedPreferenceId", ""));
+                intent.putExtra("goalId", sharedPreferences.getString("goalId", ""));
+                intent.putExtra("duration", (int) durationSlider.getValue());
+                intent.putExtra("mainMeals", mainMealRadioGroup.getCheckedRadioButtonId() == R.id.mainMeal2 ? 2 : 3);
+                intent.putExtra("sideMeals", sideMealRadioGroup.getCheckedRadioButtonId() == R.id.sideMeal1 ? 1 : 2);
+                intent.putExtra("sessions", sessionRadioGroup.getCheckedRadioButtonId() == R.id.session1 ? 1 :
+                        sessionRadioGroup.getCheckedRadioButtonId() == R.id.session2 ? 2 : 3);
+                intent.putExtra("amountOfChange", (int) amountOfChange);
+                intent.putExtra("token", token);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -92,68 +98,5 @@ public class SetDietActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    private void sendDietToBackend() {
-        int duration = (int) durationSlider.getValue();
-        int mainMeals = mainMealRadioGroup.getCheckedRadioButtonId() == R.id.mainMeal2 ? 2 : 3;
-        int sideMeals = sideMealRadioGroup.getCheckedRadioButtonId() == R.id.sideMeal1 ? 1 : 2;
-        int sessions = sessionRadioGroup.getCheckedRadioButtonId() == R.id.session1 ? 1 :
-                sessionRadioGroup.getCheckedRadioButtonId() == R.id.session2 ? 2 : 3;
-
-        // Retrieve required data from SharedPreferences
-        String userId = sharedPreferences.getString("userId", "");
-        String preferenceId = sharedPreferences.getString("selectedPreferenceId", "");
-        String activityLevelId = sharedPreferences.getString("activityLevelId", "");
-        String goalId = sharedPreferences.getString("goalId", "");
-        int goalSign = sharedPreferences.getInt("selectedGoalSign", 0);
-
-        // Create DietRequest object
-        DietRequest dietRequest = new DietRequest(activityLevelId, preferenceId, goalId, duration, mainMeals, sideMeals, sessions, (int) amountOfChange);
-
-        // Log the request body
-        Gson gson = new Gson();
-        String jsonRequest = gson.toJson(dietRequest);
-        Log.d("DietRequestBody", jsonRequest);
-
-        DietServiceImp dietService = RetrofitClient.getClient(token).create(DietServiceImp.class);
-        Call<ResponseDTO<DietResponse>> call = dietService.createDiet(dietRequest);
-
-        call.enqueue(new Callback<ResponseDTO<DietResponse>>() {
-            @Override
-            public void onResponse(Call<ResponseDTO<DietResponse>> call, Response<ResponseDTO<DietResponse>> response) {
-                if (response.isSuccessful()) {
-                    DietResponse dietResponse = response.body().getData();
-
-                    // Log the response body
-                    String jsonResponse = gson.toJson(dietResponse);
-                    Log.d("DietResponseBody", jsonResponse);
-
-                    // Handle success
-                    Toast.makeText(SetDietActivity.this, "Diet created successfully", Toast.LENGTH_SHORT).show();
-
-                    // Navigate to DietSuccessActivity
-                    Intent intent = new Intent(SetDietActivity.this, GeneratingPlanActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    try {
-                        // Log error details
-                        String errorBody = response.errorBody().string();
-                        Log.e("DietError", errorBody);
-                        Toast.makeText(SetDietActivity.this, "Failed to create diet: " + errorBody, Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseDTO<DietResponse>> call, Throwable t) {
-                // Handle failure
-                Log.e("DietFailure", t.getMessage());
-                Toast.makeText(SetDietActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

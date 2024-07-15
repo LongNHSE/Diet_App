@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:text="Generating your plan..."
+        android:text="Generating your diet plan..."
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/mineral_green" />
