@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 
+import com.example.diet.ui.product.ProductFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -33,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     MainFragment mainFragment = new MainFragment();
     BlogFragment blogFragment = new BlogFragment();
 
-//    ProductFragment productFragment = new ProductFragment();
+    ProductFragment productFragment = new ProductFragment();
 
     @Override
     public boolean
@@ -54,12 +55,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
 
-//            case R.id.navigation_product:
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.fragment_host1, productFragment)
-//                        .commit();
-//                return true;
+            case R.id.navigation_product:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_host1, productFragment)
+                        .commit();
+                return true;
         }
         return false;
     }
