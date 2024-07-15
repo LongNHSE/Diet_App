@@ -51,8 +51,26 @@ public class BMISetupActivity extends AppCompatActivity {
     }
 
     private void createBMI() {
-        int weight = Integer.parseInt(weightEditText.getText().toString().trim());
-        int height = Integer.parseInt(heightEditText.getText().toString().trim());
+        String weightStr = weightEditText.getText().toString().trim();
+        String heightStr = heightEditText.getText().toString().trim();
+
+        if (weightStr.isEmpty() || heightStr.isEmpty()) {
+            Toast.makeText(this, "Please enter both weight and height", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int weight = Integer.parseInt(weightStr);
+        int height = Integer.parseInt(heightStr);
+
+        if (weight < 40 || weight > 250) {
+            Toast.makeText(this, "Weight must be between 40kg and 250kg", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (height < 100 || height > 250) {
+            Toast.makeText(this, "Height must be between 100cm and 250cm", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         BMIRequest bmiRequest = new BMIRequest(weight, height);
 
