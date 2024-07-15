@@ -35,7 +35,7 @@ Set color used with incoming notification messages. This is used when no color i
             android:name=".ui.product.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.product.ProductActivity"
+            android:name=".ui.product.ProductFragment"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
