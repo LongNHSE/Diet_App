@@ -4,11 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,16 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FoodDetailActivity extends AppCompatActivity {
-
+public class FoodDetailActivity extends AppCompatActivity implements FoodDetailSubstituteAdapter.OnSubstituteUpdateListener {
 
     private ActivityFoodDetailBinding binding;
-
-
-    private String foodDetailId ;
+    private String foodDetailId;
     private List<FoodDetail> foodDetailSubstitutes;
     private FoodDetailSubstituteAdapter foodDetailSubstituteAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +43,9 @@ public class FoodDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         foodDetailId = intent.getStringExtra("foodDetailId");
 
-
         // Initialize substitute list and substituteAdapter
         foodDetailSubstitutes = new ArrayList<>();
-        foodDetailSubstituteAdapter = new FoodDetailSubstituteAdapter(foodDetailSubstitutes, FoodDetailActivity.this);
-
+        foodDetailSubstituteAdapter = new FoodDetailSubstituteAdapter(foodDetailSubstitutes, FoodDetailActivity.this, this);
 
         // Set up RecyclerView
         RecyclerView recyclerView = binding.substituteRecyclerView;
@@ -63,17 +53,14 @@ public class FoodDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(foodDetailSubstituteAdapter);
 
-
         // Load Food Detail
         loadFoodDetail(foodDetailId);
 
-
         // Load substitutes
         loadFoodDetailSubstitute();
-
-
     }
 
+    // Method to load food detail
     private void loadFoodDetail(String foodDetailId) {
         Retrofit retrofit = RetrofitClient.getClient(null);
         FoodDetailServiceImp apiService = retrofit.create(FoodDetailServiceImp.class);
@@ -85,14 +72,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                     JsonObject jsonObject = response.body();
                     if (jsonObject.has("statusCode") && jsonObject.get("statusCode").getAsInt() == 200) {
                         JsonObject data = jsonObject.getAsJsonObject("data");
-                        FoodDetail detail;
+                        FoodDetail detail = new Gson().fromJson(data, FoodDetail.class);
 
-
-                        Gson gson = new Gson();
-                        detail = gson.fromJson(data, FoodDetail.class);
-
-
-                        //Setting Data
+                        // Setting Data
                         Glide.with(FoodDetailActivity.this)
                                 .load(detail.getIcon())
                                 .into(binding.foodDetailAvatar);
@@ -105,25 +87,26 @@ public class FoodDetailActivity extends AppCompatActivity {
                         binding.fat.setText(String.valueOf(detail.getFat()));
                         binding.water.setText(String.valueOf(detail.getWater()));
 
-
                     } else {
-                        Log.d("Loading Food Details ID: " + foodDetailId, "Error");
+                        Log.d("FoodDetailActivity", "Loading Food Details ID: " + foodDetailId + " failed");
                     }
+                } else {
+                    Log.d("FoodDetailActivity", "Failed API response while loading Food Details ID: " + foodDetailId);
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("FoodDetailActivity", "Failed to load Food Detail", t);
             }
         });
     }
 
+    // Method to load food detail substitutes
     private void loadFoodDetailSubstitute() {
         Retrofit retrofit = RetrofitClient.getClient(null);
         FoodDetailServiceImp apiService = retrofit.create(FoodDetailServiceImp.class);
-
-
-        Call<JsonObject> call = apiService.getFoodDetailByMeal("6682bd308c5a607d9d1d78a4");
+        Call<JsonObject> call = apiService.getFoodDetailByMeal("6682bd308c5a607d9d1d78a4"); // Example meal ID, replace with actual logic
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -133,34 +116,70 @@ public class FoodDetailActivity extends AppCompatActivity {
                         JsonArray dataArray = jsonObject.getAsJsonArray("data");
                         List<FoodDetail> substitutes = new ArrayList<>();
 
-
                         Gson gson = new Gson();
                         for (JsonElement element : dataArray) {
                             FoodDetail detail = gson.fromJson(element, FoodDetail.class);
                             substitutes.add(detail);
                         }
 
-
-                        Log.d("", "substitutes: " + substitutes.size());
+                        Log.d("FoodDetailActivity", "Substitutes loaded: " + substitutes.size());
                         // Update RecyclerView
                         foodDetailSubstitutes.addAll(substitutes);
                         foodDetailSubstituteAdapter.notifyDataSetChanged();
 
-
                     } else {
-                        Log.d("Loading Facts:", "Failed to get data from API");
+                        Log.d("FoodDetailActivity", "Failed to get data from API for substitutes");
                     }
                 } else {
-                    Log.d("Loading Facts:", "Failed API response");
+                    Log.d("FoodDetailActivity", "Failed API response while loading substitutes");
                 }
             }
 
-
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("Loading Facts:", "Failed to fetch data from API");
+                Log.e("FoodDetailActivity", "Failed to fetch data from API for substitutes", t);
             }
         });
     }
 
+    // Method to handle substitute update
+    @Override
+    public void onSubstituteUpdate(String foodId) {
+        // Implement your update logic here
+        Log.d("FoodDetailActivity", "Updating food with ID: " + foodId);
+        Retrofit retrofitClient = RetrofitClient.getClient(null);
+        FoodDetailServiceImp apiService = retrofitClient.create(FoodDetailServiceImp.class);
+
+        JsonObject object = new JsonObject();
+        object.addProperty("foodId", foodId);
+
+        Call<JsonObject> call = apiService.ChangeFoodDetail(foodDetailId, object);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject.has("statusCode") && jsonObject.get("statusCode").getAsInt() == 200) {
+                        JsonObject data = jsonObject.getAsJsonObject("data");
+                        String newFoodDetailId = data.get("_id").getAsString();
+                        Log.d("FoodDetailActivity", "Food updated successfully");
+                        loadFoodDetail(newFoodDetailId);
+                        loadFoodDetailSubstitute();
+                    } else {
+                        Log.d("FoodDetailActivity", "Failed to update food");
+                    }
+                } else {
+                    Log.d("FoodDetailActivity", "Failed API response while updating food");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("FoodDetailActivity", "Failed to update food", t);
+            }
+        });
+
+
+        // You can perform any update operations here, like updating UI or sending requests
+    }
 }

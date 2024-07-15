@@ -19,94 +19,66 @@ import com.example.diet.food_detail.dto.FoodDetail;
 
 import java.util.List;
 
-public class FoodDetailSubstituteAdapter extends RecyclerView.Adapter<FoodDetailSubstituteAdapter.ViewHolder>{
+public class FoodDetailSubstituteAdapter extends RecyclerView.Adapter<FoodDetailSubstituteAdapter.ViewHolder> {
 
+    private List<FoodDetail> foodDetails;
+    private Context context;
+    private OnSubstituteUpdateListener listener;
 
-    List<FoodDetail> foodDetails;
-    Context context;
-
-
-    public FoodDetailSubstituteAdapter(List<FoodDetail> foodDetails, Context context) {
+    public FoodDetailSubstituteAdapter(List<FoodDetail> foodDetails, Context context, OnSubstituteUpdateListener listener) {
         this.foodDetails = foodDetails;
         this.context = context;
+        this.listener = listener;
     }
-
 
     @NonNull
     @Override
-    public FoodDetailSubstituteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_detail_substitute,parent,false);
-
-
-        FoodDetailSubstituteAdapter.ViewHolder viewHolder = new FoodDetailSubstituteAdapter.ViewHolder(view);
-
-
-        return viewHolder;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_detail_substitute, parent, false);
+        return new ViewHolder(view);
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull FoodDetailSubstituteAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodDetail foodDetail = foodDetails.get(position);
-
 
         // Set the foodId as a tag on the update button
         holder.updateButton.setTag(foodDetail.getFood().get_id());
-
 
         holder.foodDetailName.setText(foodDetail.getFood().getFoodName());
         Glide.with(context)
                 .load(foodDetail.getIcon())
                 .into(holder.image);
 
-
         // Set touch listener
-        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Show the overlay and button
-                        if(holder.overlayView.getVisibility() == View.GONE){
-                            holder.overlayView.setVisibility(View.VISIBLE);
-                            holder.updateButton.setVisibility(View.VISIBLE);
-                        }else{
-                            holder.overlayView.setVisibility(View.GONE);
-                            holder.updateButton.setVisibility(View.GONE);
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                }
-                return true;
+        holder.itemView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                // Toggle overlay and button visibility
+                int newVisibility = holder.overlayView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+                holder.overlayView.setVisibility(newVisibility);
+                holder.updateButton.setVisibility(newVisibility);
             }
+            return true;
         });
-
 
         // Set click listener for the update button
-        holder.updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String foodId = (String) v.getTag();
-                updateSubstitute(foodId);
-            }
+        holder.updateButton.setOnClickListener(v -> {
+            String foodId = (String) v.getTag();
+            updateSubstitute(foodId);
         });
     }
-
 
     @Override
     public int getItemCount() {
         return foodDetails.size();
     }
 
-
-    // Initializing the Views
+    // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView foodDetailName;
         View overlayView;
         Button updateButton;
-
 
         public ViewHolder(View view) {
             super(view);
@@ -117,8 +89,16 @@ public class FoodDetailSubstituteAdapter extends RecyclerView.Adapter<FoodDetail
         }
     }
 
+    // Method to update substitute
+    private void updateSubstitute(String foodId) {
+        Log.d("FoodDetailSubstituteAdapter", "Updating food with ID: " + foodId);
+        if (listener != null) {
+            listener.onSubstituteUpdate(foodId);
+        }
+    }
 
-    private void updateSubstitute(String foodId){
-        Log.d("Update", "Updating food with ID: " + foodId);
+    // Interface to handle substitute update
+    public interface OnSubstituteUpdateListener {
+        void onSubstituteUpdate(String foodId);
     }
 }

@@ -44,7 +44,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.UserViewHolder
                         .placeholder(R.drawable.placeholder_image)
                         .into(holder.imageView);
             } else {
-                holder.imageView.setImageResource(R.drawable.placeholder_image); // Set placeholder if no image URL
+                holder.imageView.setImageResource(R.drawable.lunch); // Set placeholder if no image URL
             }
             holder.nameTextView.setText(blog.getName());
             holder.subtitleTextView.setText(blog.getSubtitle());
