@@ -69,6 +69,7 @@ Set color used with incoming notification messages. This is used when no color i
             </intent-filter>
         </activity>
 
+        <activity android:name=".ExerciseActivity" android:exported="true" />
         <activity
             android:name=".ExerciseDetailActivity"
             android:exported="true" />
