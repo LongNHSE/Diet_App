@@ -1,24 +1,24 @@
 package com.example.diet.goal.dto;
 
 public class GoalResponse {
-    private String id;
+    private String _id;
     private String goalName;
     private int sign;
     private boolean isActive;
 
-    public GoalResponse(String id, String goalName, int sign, boolean isActive) {
-        this.id = id;
+    public GoalResponse(String _id, String goalName, int sign, boolean isActive) {
+        this._id = _id;
         this.goalName = goalName;
         this.sign = sign;
         this.isActive = isActive;
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getGoalName() {

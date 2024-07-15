@@ -111,7 +111,6 @@ public class GoalSetupActivity extends AppCompatActivity {
         selectedGoalId = goalId;
         selectedGoalName = goalName;
 
-        // Ensure the disabled options retain their gray background
         if (userBMI >= 25.0) { // Fat or obese
             optionGainWeight.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
         } else {

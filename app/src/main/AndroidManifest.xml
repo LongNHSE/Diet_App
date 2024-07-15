@@ -114,6 +114,9 @@ Set color used with incoming notification messages. This is used when no color i
             android:name=".PreferenceSuccessActivity"
             android:exported="true" />
         <activity
+            android:name=".SetDietActivity"
+            android:exported="true" />
+        <activity
             android:name=".TextToSpeechActivity"
             android:exported="true" />
     </application>

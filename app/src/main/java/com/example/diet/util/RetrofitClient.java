@@ -14,7 +14,9 @@ public class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:8000/";
 
     public static Retrofit getClient(String authToken) {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS);
 
         // Add AuthInterceptor with JWT token
         if (authToken != null) {

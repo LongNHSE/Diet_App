@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/pale_goldenrod">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Diet Plan"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/mineral_green"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duration (weeks):"
+        android:textColor="@color/black"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/durationSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="1"
+        android:valueTo="4"
+        android:stepSize="1"
+        app:trackColorActive="@color/mineral_green"
+        app:trackColorInactive="@color/light_gray"
+        app:thumbColor="@color/mineral_green"
+        app:haloColor="@color/mineral_green"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/durationValueTextView"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 weeks"
+        android:textSize="35sp"
+        android:textColor="@color/mineral_green"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Meals per day:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/mainMealRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/mainMeal2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:checked="true"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/mainMeal3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Side Meals per day:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/sideMealRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/sideMeal1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:checked="true"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/sideMeal2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exercise Sessions per week:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/sessionRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/session1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:checked="true"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/session2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/session3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="@color/mineral_green"
+            app:buttonTint="@color/mineral_green"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount of Change (kg):"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="@color/mineral_green"
+        android:textColor="@color/white"/>
+</LinearLayout>

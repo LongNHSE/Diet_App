@@ -168,12 +168,12 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        int day = daySpinner.getSelectedIndex() + 1; // Adjusting for 0-based index
-        int month = monthSpinner.getSelectedIndex() + 1; // Adjusting for 0-based index
+        int day = daySpinner.getSelectedIndex() + 1;
+        int month = monthSpinner.getSelectedIndex() + 1;
         int year = Integer.parseInt(yearSpinner.getText().toString());
-        String dob = String.format("%04d-%02d-%02d", year, month, day); // Ensuring correct date format
+        String dob = String.format("%04d-%02d-%02d", year, month, day);
 
-        String gender = genderSpinner.getText().toString().toLowerCase(); // Ensure gender is lowercase as expected by the server
+        String gender = genderSpinner.getText().toString().toLowerCase();
 
         SignUpRequest request = new SignUpRequest(username, phone, dob, email, gender, password);
 
@@ -228,7 +228,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void saveUserData(SignUpResponse signUpResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("refreshToken", signUpResponse.getRefreshToken());
-        editor.putString("token", signUpResponse.getToken()); // Save the token
+        editor.putString("token", signUpResponse.getToken());
         editor.putString("user", new Gson().toJson(signUpResponse.getUser()));
         editor.putString("userId", signUpResponse.getUser().get_id());
         editor.apply();
