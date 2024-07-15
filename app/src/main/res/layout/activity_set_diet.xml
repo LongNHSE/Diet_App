@@ -41,7 +41,7 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 weeks"
+        android:text="1 week"
         android:textSize="35sp"
         android:textColor="@color/mineral_green"
         android:layout_marginBottom="16dp"/>
@@ -165,7 +165,7 @@
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Create Diet"
         android:backgroundTint="@color/mineral_green"
         android:textColor="@color/white"/>
 </LinearLayout>
