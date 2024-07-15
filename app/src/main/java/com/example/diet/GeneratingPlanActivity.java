@@ -52,7 +52,7 @@ public class GeneratingPlanActivity extends AppCompatActivity {
                     successMessage.setVisibility(View.VISIBLE);
                     goHomeButton.setVisibility(View.VISIBLE);
                     goHomeButton.setOnClickListener(v -> {
-                        Intent intent = new Intent(GeneratingPlanActivity.this, MainActivity.class);
+                        Intent intent = new Intent(GeneratingPlanActivity.this, MainFragment.class);
                         startActivity(intent);
                         finish();
                     });

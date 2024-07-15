@@ -2,9 +2,6 @@ package com.example.diet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.BulletSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,7 +47,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Navigate back to MainActivity
-                Intent intent = new Intent(ExerciseDetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(ExerciseDetailActivity.this, MainFragment.class);
                 startActivity(intent);
                 finish();
             }

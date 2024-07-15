@@ -20,41 +20,40 @@
         android:theme="@style/Theme.Diet"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.meal_info.MealInfoActivity"
             android:exported="false"
             android:theme="@style/Theme.Diet" />
-
         <activity
             android:name=".ui.all_diet.AllDietActivity"
             android:exported="false"
             android:theme="@style/Theme.Diet" />
-
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".ExerciseDetailActivity">
-
-        </activity>
+            android:exported="true" />
+        <activity
+            android:name=".ExerciseDetailActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".IntroSliderActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainFragment"
             android:exported="true">
 
-        </activity>
-        <!--        <activity android:name=".ExerciseDetailActivity" />-->
+        </activity> <!-- <activity android:name=".ExerciseDetailActivity" /> -->
         <activity
             android:name=".GoalSetupActivity"
             android:exported="true" />
@@ -74,6 +73,12 @@
             android:name=".GeneratingPlanActivity"
             android:exported="true" />
         <activity android:name=".BlogActivity" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".BlogFragment"
+            android:exported="true"></activity>
         <activity android:name=".BlogDetailActivity" />
         <activity
             android:name=".ActivityLevelSelectionActivity"
@@ -87,7 +92,9 @@
         <activity
             android:name=".PreferenceSuccessActivity"
             android:exported="true" />
+        <activity
+            android:name=".TextToSpeechActivity"
+            android:exported="true" />
     </application>
-
 
 </manifest>

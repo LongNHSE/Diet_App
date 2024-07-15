@@ -1,7 +1,11 @@
 package com.example.diet;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,8 +28,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.List;
+import java.util.Locale;
 
-public class BlogDetailActivity extends AppCompatActivity {
+public class BlogDetailActivity extends AppCompatActivity implements OnInitListener {
+
     private RecyclerView recyclerViewIngredients, recyclerViewDirections;
     private ImageView imageViewBlog;
     private TextView textViewTitle, textViewRating;
@@ -33,11 +39,15 @@ public class BlogDetailActivity extends AppCompatActivity {
     private LinearLayout linearLayoutStars;
     private TabLayout tabLayout;
     private ImageButton buttonBack;
+    private Button buttonReadAloud;
+
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog_detail);
+
         linearLayoutStars = findViewById(R.id.linearLayoutStars);
         recyclerViewIngredients = findViewById(R.id.recyclerViewIngredients);
         recyclerViewDirections = findViewById(R.id.recyclerViewDirections);
@@ -45,8 +55,10 @@ public class BlogDetailActivity extends AppCompatActivity {
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewRating = findViewById(R.id.textViewRating);
         buttonBack = findViewById(R.id.buttonBack);
+        buttonReadAloud = findViewById(R.id.buttonReadAloud);
+        tabLayout = findViewById(R.id.tabLayout); // Ensure tabLayout is initialized
 
-        tabLayout = findViewById(R.id.tabLayout);
+        tts = new TextToSpeech(this, this);
 
         // Get blog ID from intent
         blogId = getIntent().getStringExtra("blog_id");
@@ -87,6 +99,73 @@ public class BlogDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Set up read aloud button
+        buttonReadAloud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readAloud();
+            }
+        });
+    }
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(Locale.US);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                // Handle the error
+            }
+        } else {
+            // Initialization failed
+        }
+    }
+
+    private void readAloud() {
+        StringBuilder text = new StringBuilder();
+        if (tabLayout.getSelectedTabPosition() == 0) {
+            int count = recyclerViewIngredients.getAdapter().getItemCount();
+            Log.d("RecyclerView", "Ingredients RecyclerView Item Count: " + count);
+            for (int i = 0; i < count; i++) {
+                View itemView = recyclerViewIngredients.getLayoutManager().findViewByPosition(i);
+                if (itemView != null) {
+                    Log.d("RecyclerView", "Ingredients RecyclerView Item at Position " + i + ": " + itemView.toString());
+                    TextView textView = itemView.findViewById(R.id.textViewIngredient);
+                    if (textView != null) {
+                        String ingredient = textView.getText().toString().trim();
+                        text.append(ingredient).append(". ");
+                    }
+                } else {
+                    Log.d("RecyclerView", "Ingredients RecyclerView Item at Position " + i + " is null");
+                }
+            }
+        } else if (tabLayout.getSelectedTabPosition() == 1) {
+            int count = recyclerViewDirections.getAdapter().getItemCount();
+            Log.d("RecyclerView", "Directions RecyclerView Item Count: " + count);
+            for (int i = 0; i < count; i++) {
+                View itemView = recyclerViewDirections.getLayoutManager().findViewByPosition(i);
+                if (itemView != null) {
+                    Log.d("RecyclerView", "Directions RecyclerView Item at Position " + i + ": " + itemView.toString());
+                    TextView textView = itemView.findViewById(R.id.textViewDirection);
+                    if (textView != null) {
+                        String direction = textView.getText().toString().trim();
+                        text.append(direction).append(". ");
+                    }
+                } else {
+                    Log.d("RecyclerView", "Directions RecyclerView Item at Position " + i + " is null");
+                }
+            }
+        }
+        tts.speak(text.toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    @Override
+    public void onDestroy() {
+        // Shutdown TTS when the activity is destroyed
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 
     private void getBlogDetails(String blogId) {
