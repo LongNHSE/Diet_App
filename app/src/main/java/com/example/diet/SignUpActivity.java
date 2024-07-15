@@ -1,8 +1,6 @@
 package com.example.diet;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -25,6 +23,8 @@ import com.example.diet.auth.dto.SignUpResponse;
 import com.example.diet.auth.services.AuthService;
 import com.example.diet.response.ResponseDTO;
 import com.example.diet.util.RetrofitClient;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.skydoves.powerspinner.PowerSpinnerView;
 
@@ -42,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private PowerSpinnerView daySpinner, monthSpinner, yearSpinner, genderSpinner;
     private EditText usernameEditText, phoneEditText, emailEditText, passwordEditText, confirmPasswordEditText;
-    private SharedPreferences sharedPreferences;
     private AuthService authService;
 
     @Override
@@ -67,8 +66,6 @@ public class SignUpActivity extends AppCompatActivity {
         genderSpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.gender_array)));
 
         findViewById(R.id.sign_up_button).setOnClickListener(v -> signUpUser());
-
-        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
 
         setupBackButton();
         setupLogInTextView();
@@ -192,14 +189,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Log.d("SignUpActivity", "Response Body: " + new Gson().toJson(response.body()));
                     ResponseDTO<SignUpResponse> responseDTO = response.body();
                     if (responseDTO.getStatusCode() == 201) {
-                        SignUpResponse signUpResponse = responseDTO.getData();
-                        if (signUpResponse != null) {
-                            saveUserData(signUpResponse);
-                            Toast.makeText(SignUpActivity.this, "Sign Up successful", Toast.LENGTH_SHORT).show();
-                            navigateToBMISetupActivity(signUpResponse);
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Sign Up failed: Empty response data", Toast.LENGTH_SHORT).show();
-                        }
+                        showSignUpSuccessDialog();
                     } else {
                         Toast.makeText(SignUpActivity.this, responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -225,25 +215,19 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void saveUserData(SignUpResponse signUpResponse) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("refreshToken", signUpResponse.getRefreshToken());
-        editor.putString("token", signUpResponse.getToken());
-        editor.putString("user", new Gson().toJson(signUpResponse.getUser()));
-        editor.putString("userId", signUpResponse.getUser().get_id());
-        editor.apply();
-    }
-
-    private void navigateToBMISetupActivity(SignUpResponse signUpResponse) {
-        Intent intent = new Intent(SignUpActivity.this, BMISetupActivity.class);
-        intent.putExtra("userId", signUpResponse.getUser().get_id());
-        intent.putExtra("token", signUpResponse.getToken());
-        startActivity(intent);
-        finish();
+    private void showSignUpSuccessDialog() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Account Created")
+                .setIcon(R.drawable.check_mark)
+                .setMessage("Your account has been created successfully. Please log in to continue.")
+                .setPositiveButton("Log In", (dialog, which) -> navigateToLogIn())
+                .setCancelable(false)
+                .show();
     }
 
     private void navigateToLogIn() {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 }

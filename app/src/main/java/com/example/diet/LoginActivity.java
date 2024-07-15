@@ -9,6 +9,7 @@ import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,17 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginUser();
-            }
-        });
+        loginButton.setOnClickListener(v -> loginUser());
 
         setupSignUpTextView();
-
-        // Setup the new button for ingredients page
-        setupIngredientPageButton();
     }
 
     private void setupSignUpTextView() {
@@ -82,15 +75,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String username = emailEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        LoginRequest loginRequest = new LoginRequest(username, password);
+        LoginRequest loginRequest = new LoginRequest(email, password);
 
         AuthService authService = RetrofitClient.getClient(null).create(AuthService.class);
         Call<ResponseDTO<LoginResponse>> call = authService.loginUser(loginRequest);
@@ -100,18 +93,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseDTO<LoginResponse>> call, Response<ResponseDTO<LoginResponse>> response) {
                 if (response.isSuccessful()) {
                     ResponseDTO<LoginResponse> responseDTO = response.body();
-                    if (responseDTO != null) {
-                        if (responseDTO.getStatusCode() == 200) {
-                            saveUserData(responseDTO.getData());
-                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                            navigateToMainActivity();
-                        } else if (responseDTO.getStatusCode() == 404) {
-                            Toast.makeText(LoginActivity.this, "Login failed: Password is incorrect", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Login failed: " + responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    if (responseDTO != null && responseDTO.getStatusCode() == 200) {
+                        LoginResponse loginResponse = responseDTO.getData();
+                        saveUserData(loginResponse);
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        navigateToBMISetupActivity(loginResponse);
                     } else {
-                        showIncorrectCredentialsDialog();
+                        Toast.makeText(LoginActivity.this, "Login failed: " + responseDTO.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     showIncorrectCredentialsDialog();
@@ -128,14 +116,15 @@ public class LoginActivity extends AppCompatActivity {
     private void saveUserData(LoginResponse loginResponse) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", loginResponse.getToken());
-        editor.putString("refreshToken", loginResponse.getRefreshToken());
         editor.putString("user", new Gson().toJson(loginResponse.getUser()));
         editor.putString("userId", loginResponse.getUser().get_id());
         editor.apply();
     }
 
-    private void navigateToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+    private void navigateToBMISetupActivity(LoginResponse loginResponse) {
+        Intent intent = new Intent(LoginActivity.this, BMISetupActivity.class);
+        intent.putExtra("userId", loginResponse.getUser().get_id());
+        intent.putExtra("token", loginResponse.getToken());
         startActivity(intent);
         finish();
     }
@@ -147,20 +136,5 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showIncorrectCredentialsDialog() {
         Toast.makeText(this, "Login failed: Incorrect username or password", Toast.LENGTH_SHORT).show();
-    }
-
-    private void setupIngredientPageButton() {
-//        Button ingredientPageButton = findViewById(R.id.ingredientPageButton);
-//        ingredientPageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                navigateToIngredientPage();
-//            }
-//        });
-    }
-
-    private void navigateToIngredientPage() {
-        Intent intent = new Intent(LoginActivity.this, BlogFragment.class);
-        startActivity(intent);
     }
 }

@@ -32,7 +32,7 @@ public class ActivityLevelSelectionActivity extends AppCompatActivity {
     private LinearLayout activityLevelsContainer;
     private ImageView selectedActivityImage;
     private TextView selectedActivityName;
-    private MaterialButton previousButton, continueButton;
+    private MaterialButton continueButton;
 
     private ActivityLevelService activityLevelService;
 
@@ -50,7 +50,6 @@ public class ActivityLevelSelectionActivity extends AppCompatActivity {
         activityLevelsContainer = findViewById(R.id.activityLevelsContainer);
         selectedActivityImage = findViewById(R.id.selectedActivityImage);
         selectedActivityName = findViewById(R.id.selectedActivityName);
-        previousButton = findViewById(R.id.previousButton);
         continueButton = findViewById(R.id.continueButton);
 
         sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
@@ -59,8 +58,6 @@ public class ActivityLevelSelectionActivity extends AppCompatActivity {
 
         initializeActivityLevelImages();
         fetchActivityLevels();
-
-        previousButton.setOnClickListener(v -> onBackPressed());
 
         continueButton.setOnClickListener(v -> {
             if (selectedActivityLevelId == null) {

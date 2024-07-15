@@ -101,14 +101,11 @@ public class GeneratingPlanActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     DietResponse dietResponse = response.body().getData();
 
-                    // Log the response body
                     String jsonResponse = gson.toJson(dietResponse);
                     Log.d("DietResponseBody", jsonResponse);
 
-                    // Handle success
                     Toast.makeText(GeneratingPlanActivity.this, "Diet created successfully", Toast.LENGTH_SHORT).show();
 
-                    // Update UI
                     handler.post(() -> {
                         progressBar.setProgress(100);
                         progressText.setText("100%");
@@ -116,7 +113,7 @@ public class GeneratingPlanActivity extends AppCompatActivity {
                         successMessage.setVisibility(View.VISIBLE);
                         goHomeButton.setVisibility(View.VISIBLE);
                         goHomeButton.setOnClickListener(v -> {
-                            Intent intent = new Intent(GeneratingPlanActivity.this, MainFragment.class);
+                            Intent intent = new Intent(GeneratingPlanActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         });
