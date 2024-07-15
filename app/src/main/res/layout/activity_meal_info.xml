@@ -150,11 +150,13 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/generate_coze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_custom_background"
+                android:textColor="@color/white"
                 android:text="Get Recommendation"
                 android:onClick="onRecommendFood" />
 

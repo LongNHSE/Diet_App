@@ -36,6 +36,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private ProductAdapter productAdapter;
 
+    private ProductAlternativeAdapter productAlternativeAdapter;
+
 
     private Product product;
 
@@ -49,6 +51,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private ProductServiceImp apiService;
     private List<Product> relatedProducts;
+
+    private List<Product> alternativeProducts;
 
 
     @Override
@@ -72,6 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         // Initialize products list and adapter
         relatedProducts = new ArrayList<>();
         productAdapter = new ProductAdapter(relatedProducts, ProductDetailActivity.this);
+        productAlternativeAdapter = new ProductAlternativeAdapter(alternativeProducts, ProductDetailActivity.this);
 
 
         // Set up RecyclerView
@@ -83,6 +88,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         if (productId != null) {
             loadProduct(productId);
+
         }
     }
 
@@ -118,6 +124,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         binding.originData.setText(product.getOrigin());
                         binding.volumeData.setText(String.valueOf(product.getVolume()));
 
+                        getAlternativeProduct(product.getProductTypeId());
+
 
                         loadRelatedProducts(product.getType());
                     } else {
@@ -132,6 +140,38 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d("Loading Product Details ID: " + productId, "Failed", t);
+            }
+        });
+    }
+
+    private void getAlternativeProduct(String catergoryId) {
+        Retrofit retrofit = RetrofitClient.getClient(null);
+        ProductServiceImp apiService = retrofit.create(ProductServiceImp.class);
+        Call<JsonObject> call = apiService.getRelatedProduct(catergoryId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject.has("statusCode") && jsonObject.get("statusCode").getAsInt() == 200) {
+                        JsonArray dataArray = jsonObject.getAsJsonArray("data");
+                        List<Product> returnProducts = new ArrayList<>();
+                        Gson gson = new Gson();
+                        for (JsonElement element : dataArray) {
+                            Product product = gson.fromJson(element, Product.class);
+                            returnProducts.add(product);
+                        }
+                        relatedProducts.clear();
+                        relatedProducts.addAll(returnProducts);
+                        productAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("Loading Products:", "error");
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("Loading Products:", "failed");
             }
         });
     }

@@ -16,7 +16,7 @@ public interface ProductServiceImp {
     Call<JsonObject> getAllProducts();
 
 
-    @GET("Product")
-    Call<JsonObject> getRelatedProduct(@Query("type") String type);
+    @GET("products")
+    Call<JsonObject> getRelatedProduct(@Query("categoryId") String categoryId);
 
 }
