@@ -22,6 +22,10 @@ public class Message {
     // Getters and Setters
 
 
+    public Message(String content) {
+        this.content = content;
+    }
+
     public String getRole() {
         return role;
     }

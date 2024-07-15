@@ -184,5 +184,34 @@ public class MealInfoActivity extends AppCompatActivity {
             }
         }, ingredientList);
     }
+//public void onRecommendFood(View view) {
+//    CozeBotService cozeBotService = new CozeBotService();
+//    ArrayList<FoodDetail> foodDetails = meal.getFoodDetails();
+//
+//    String[] ingredientList = new String[foodDetails.size()];
+//
+//    for (int i = 0; i < foodDetails.size(); i++) {
+//        ingredientList[i] = foodDetails.get(i).getFood().getFoodName();
+//    }
+//
+//    cozeBotService.sendRequestStream(new CozeBotService.CozeBotCallback() {
+//        @Override
+//        public void onSuccess(List<Message> messages) {
+//            TextView dish_view = binding.cozeResponse;
+//            StringBuilder responseBuilder = new StringBuilder();
+//            for (Message message : messages) {
+//                responseBuilder.append(message.getContent()).append(" ");
+//            }
+//            String response = responseBuilder.toString().trim();
+//            Log.d("new value:", response);
+//            dish_view.setText(response);
+//        }
+//
+//        @Override
+//        public void onFailure(Throwable t) {
+//            Log.e("Coze output", "Request failed", t);
+//        }
+//    }, ingredientList);
+//}
 
 }

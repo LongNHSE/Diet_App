@@ -39,12 +39,8 @@ Set color used with incoming notification messages. This is used when no color i
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.food_detail.FoodDetailActivity"
@@ -65,16 +61,23 @@ Set color used with incoming notification messages. This is used when no color i
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ExerciseDetailActivity"
             android:exported="true" />
         <activity
             android:name=".IntroSliderActivity"
             android:exported="true" />
-        <activity
-            android:name=".MainFragment"
-            android:exported="true" /> <!-- <activity android:name=".ExerciseDetailActivity" /> -->
+<!--        <activity-->
+<!--            android:name=".MainFragment"-->
+<!--            android:exported="true" /> &lt;!&ndash; <activity android:name=".ExerciseDetailActivity" /> &ndash;&gt;-->
         <activity
             android:name=".GoalSetupActivity"
             android:exported="true" />
