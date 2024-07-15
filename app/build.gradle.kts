@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -38,6 +39,7 @@ android {
 dependencies {
     implementation(libs.glide)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.firebase.messaging)
 
     annotationProcessor(libs.glide.compiler)
     implementation(libs.androidx.recyclerview)
@@ -47,6 +49,10 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.material.v160)
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.code.gson:gson:2.8.9")
+
 
     implementation(libs.viewpager2)
     implementation(libs.appcompat)

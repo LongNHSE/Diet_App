@@ -22,6 +22,23 @@
     <string name="nutritional_values">Nutritional Values</string>
     <string name="select_a_substitute">Select A Substitute</string>
     <string name="substitute">Substitute</string>
+    <string name="product_image">Product Image</string>
+    <string name="sample_product_name">OstroVit Omega 3 D3+K2</string>
+    <string name="sample_product_price">420,000</string>
+    <string name="star_icon">star icon</string>
+    <string name="sample_product_rating">8.5</string>
+    <string name="sample_product_purchase_no">11 lượt bán</string>
+    <string name="view_products">View Products</string>
+    <string name="vitamin">Vitamin</string>
+    <string name="sample_product_effect">- Tốt cho não bộ, xương khớp, tim mạch, chống đông máu</string>
+    <string name="brand">Brand</string>
+    <string name="sample_product_brand">OstroVit</string>
+    <string name="origin">Origin</string>
+    <string name="volume">Volume</string>
+    <string name="sample_product_origin">Poland</string>
+    <string name="sample_product_volume">0.12</string>
+    <string name="products">Product List</string>
+    <string name="related_products">You Might Also Like</string>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

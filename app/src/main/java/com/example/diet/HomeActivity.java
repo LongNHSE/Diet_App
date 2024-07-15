@@ -32,7 +32,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     MainFragment mainFragment = new MainFragment();
     BlogFragment blogFragment = new BlogFragment();
-//    ThirdFragment thirdFragment = new ThirdFragment();
+
+//    ProductFragment productFragment = new ProductFragment();
 
     @Override
     public boolean
@@ -53,10 +54,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
                 return true;
 
-//            case R.id.settings:
+//            case R.id.navigation_product:
 //                getSupportFragmentManager()
 //                        .beginTransaction()
-//                        .replace(R.id.flFragment, thirdFragment)
+//                        .replace(R.id.fragment_host1, productFragment)
 //                        .commit();
 //                return true;
         }
