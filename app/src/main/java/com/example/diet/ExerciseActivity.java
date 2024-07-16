@@ -13,16 +13,16 @@ public class ExerciseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_day_plan);
+        setContentView(R.layout.activity_exercise_detail);
 
-        ImageView searchImageView = findViewById(R.id.search_1);
-        searchImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("ExerciseActivity", "Search icon clicked");
-                Intent intent = new Intent(ExerciseActivity.this, ExerciseDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ImageView searchImageView = findViewById(R.id.search_1);
+//        searchImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("ExerciseActivity", "Search icon clicked");
+//                Intent intent = new Intent(ExerciseActivity.this, ExerciseDetailActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

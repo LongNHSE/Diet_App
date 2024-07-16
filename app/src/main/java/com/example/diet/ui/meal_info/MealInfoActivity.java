@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.example.diet.ExerciseActivity;
 import com.example.diet.coze.dto.Message;
 import com.example.diet.coze.service.CozeBotService;
 import com.example.diet.databinding.ContentMealInfoBinding;
@@ -161,7 +162,11 @@ public class MealInfoActivity extends AppCompatActivity {
 
         return formattedNumber;
     }
-
+    public void intenExcercise(int dayIndex) {
+        Intent intent = new Intent(this, ExerciseActivity.class);
+        intent.putExtra("dayIndex", dayIndex);
+        startActivity(intent);
+    }
     public void onRecommendFood(View view) {
         CozeBotService cozeBotService = new CozeBotService();
         ArrayList<FoodDetail> foodDetails = meal.getFoodDetails();

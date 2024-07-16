@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.diet.ExerciseActivity;
+import com.example.diet.ExerciseDetailActivity;
 import com.example.diet.R;
 import com.example.diet.meal.dto.Meal;
 import com.example.diet.meal.service.MealServiceImp;
@@ -89,6 +91,17 @@ public class day_plan extends Fragment {
         // Find the increaseButton ImageView
         ImageView increaseButton = view.findViewById(R.id.increaseButton);
         ImageView decreseButton = view.findViewById(R.id.decreaseButton);
+        ImageView exsercise = view.findViewById(R.id.exsercise);
+
+        exsercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ExerciseDetailActivity.class);
+                intent.putExtra("dayIndex", dayIndex);
+                startActivity(intent);
+            }
+        });
+
 
         increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,5 +212,9 @@ public class day_plan extends Fragment {
         typeName5.setText(totalCarbs + "g Carbs, " + totalFat + "g Fat, " + totalProtein + "g Protein");
     }
 
-
+    public void intenExcercise(int dayIndex) {
+        Intent intent = new Intent(getActivity(), ExerciseActivity.class);
+        intent.putExtra("dayIndex", dayIndex);
+        startActivity(intent);
+    }
 }

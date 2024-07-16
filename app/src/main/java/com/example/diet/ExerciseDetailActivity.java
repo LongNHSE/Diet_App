@@ -40,18 +40,18 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         exerciseDescription = findViewById(R.id.exercise_description);
 
         // Find the back button ImageView
-        ImageView backButton = findViewById(R.id.back_button);
+//        ImageView backButton = findViewById(R.id.back_button);
 
         // Set an OnClickListener on the back button
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate back to MainActivity
-                Intent intent = new Intent(ExerciseDetailActivity.this, MainFragment.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        backButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Navigate back to MainActivity
+//                Intent intent = new Intent(ExerciseDetailActivity.this, MainFragment.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         // Fetch the authToken from intent or other source
         String authToken = "your_auth_token";

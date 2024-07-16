@@ -53,4 +53,5 @@ public class DayPlanViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
+
 }
