@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,35 +15,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.diet.R;
+import com.example.diet.cart.dto.Cart;
 import com.example.diet.product.dto.Product;
+import com.example.diet.ui.cart.CartActivity;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder>{
 
-
     List<Product> products;
     Context context;
-
+    Cart cart;
 
     public ProductAdapter(List<Product> products, Context context) {
         this.products = products;
         this.context = context;
-    }
 
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item,parent,false);
-
-
-        ProductAdapter.ViewHolder viewHolder = new ProductAdapter.ViewHolder(view);
-
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -56,22 +52,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .load(product.getImages()[0])
                 .into(holder.images);
 
-
-        //Binding the event for details
+        // Binding the event for details
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("productID", product.getProductId());
             Log.d("productID start", product.getProductId());
             context.startActivity(intent);
         });
-    }
 
+        // Add to Cart button click listener
+        holder.addToCart.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CartActivity.class);
+            intent.putExtra("productID", product.getProductId());
+            intent.putExtra("productPrice", product.getPrice());
+            Log.d("productID Cart", product.getProductId());
+            context.startActivity(intent);
+        });
+    }
 
     @Override
     public int getItemCount() {
         return products.size();
     }
-
 
     // Initializing the Views
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,17 +82,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView price;
         TextView rating;
         TextView purchaseNo;
-
+        ImageButton addToCart;
 
         public ViewHolder(View view) {
             super(view);
-            images = (ImageView) view.findViewById(R.id.iv_product);
-            productName = (TextView) view.findViewById(R.id.tv_product_name);
-            price = (TextView) view.findViewById(R.id.tv_price);
-            rating = (TextView) view.findViewById(R.id.tv_rating);
-            purchaseNo = (TextView) view.findViewById(R.id.tv_purchase_no);
+            images = view.findViewById(R.id.iv_product);
+            productName = view.findViewById(R.id.tv_product_name);
+            price = view.findViewById(R.id.tv_price);
+            rating = view.findViewById(R.id.tv_rating);
+            purchaseNo = view.findViewById(R.id.tv_purchase_no);
+            addToCart = view.findViewById(R.id.addToCart);
         }
     }
-
-
 }

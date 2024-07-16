@@ -99,8 +99,10 @@ Set color used with incoming notification messages. This is used when no color i
             android:exported="true" />
         <!--        <activity android:name=".BlogActivity" />-->
         <activity
-            android:name=".CartActivity"
+            android:name=".ui.cart.CartActivity"
             android:exported="true" />
+
+
         <activity
             android:name=".BlogFragment"
             android:exported="true" />

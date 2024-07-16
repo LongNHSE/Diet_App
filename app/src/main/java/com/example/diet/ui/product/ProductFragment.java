@@ -1,20 +1,23 @@
 package com.example.diet.ui.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.diet.databinding.ActivityProductBinding;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.example.diet.databinding.ActivityProductBinding;
 import com.example.diet.product.dto.Product;
 import com.example.diet.product.service.ProductServiceImp;
+import com.example.diet.ui.cart.CartActivity;
 import com.example.diet.util.RetrofitClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -31,7 +34,7 @@ import retrofit2.Retrofit;
 
 public class ProductFragment extends Fragment {
 
-    private ActivityProductBinding  binding;
+    private ActivityProductBinding binding;
     private List<Product> products;
     private ProductAdapter productAdapter;
 
@@ -63,6 +66,9 @@ public class ProductFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireActivity(), 2); // 2 columns
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(productAdapter);
+
+        ImageButton shoppingCartIcon = binding.shoppingCart;
+        shoppingCartIcon.setOnClickListener(v -> onShoppingCartClicked());
 
         // Load products
         loadProducts();
@@ -105,5 +111,11 @@ public class ProductFragment extends Fragment {
                 Log.d("Loading Products:", "failed");
             }
         });
+    }
+
+    // Handle shopping cart click
+    private void onShoppingCartClicked() {
+        Intent intent = new Intent(requireContext(), CartActivity.class);
+        startActivity(intent);
     }
 }

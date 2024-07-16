@@ -118,13 +118,13 @@
                     android:layout_weight="5" />
 
 
-                <ImageView
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:id="@+id/addToCart"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/add_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/add_button" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
