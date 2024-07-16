@@ -1,6 +1,7 @@
 package com.example.diet.ui.cart;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         Cart cart = cartList.get(position);
+        Log.d("Cart Adapter", "cart: "+cart.getProduct());
         if (cart.getProduct() != null) {
+            Log.d("Cart Adapter", "cart: "+cart);
             holder.itemName.setText(cart.getProduct().getProductName());
             holder.itemPrice.setText(String.valueOf(cart.getUnitPrice()) + "đ");
             holder.itemQuantity.setText(String.valueOf(cart.getQuantity()));
@@ -57,10 +60,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartList.size();
     }
 
+    public int calculateTotalPrice() {
+        int total = 0;
+        for (Cart cart : cartList) {
+            total += cart.getTotal();
+        }
+        return total;
+    }
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView itemImage;
-        TextView itemName, itemPrice, itemQuantity;
+        TextView itemName, itemPrice, itemQuantity, totalPrice;
         ImageButton increaseButton, decreaseButton, removeButton;
+
+
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             increaseButton = itemView.findViewById(R.id.increaseButton);
             decreaseButton = itemView.findViewById(R.id.decreaseButton);
             removeButton = itemView.findViewById(R.id.removeButton);
+            totalPrice = itemView.findViewById(R.id.totalPrice);
         }
     }
 }

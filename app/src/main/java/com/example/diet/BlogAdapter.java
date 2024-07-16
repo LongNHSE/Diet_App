@@ -50,7 +50,6 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.UserViewHolder
             holder.subtitleTextView.setText(blog.getSubtitle());
             holder.textViewRating.setText(String.valueOf(blog.getAverageRating()));
             holder.textViewReviews.setText(String.valueOf("/ "+ blog.getNumRating() + " reviews" ));
-
             // Handle click on blog item
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

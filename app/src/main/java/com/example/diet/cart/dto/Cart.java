@@ -11,14 +11,14 @@ public class Cart {
     private int total;
 
     public Product getProduct() {
-        return product;
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(Product products) {
+        this.products = products;
     }
 
-    private Product product;
+    private Product products;
 
     public Cart(String productId, int unitPrice, int quantity, String billId, int total) {
         this.productId = productId;

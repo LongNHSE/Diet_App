@@ -1,6 +1,8 @@
 package com.example.diet.cart.services;
 
 import com.example.diet.cart.dto.Cart;
+import com.example.diet.payment.dto.Payment;
+import com.example.diet.response.ResponseDTO;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -19,4 +21,8 @@ public interface CartService {
 
     @PATCH("productDetail")
     Call<Cart> updateProductDetail(@Body Cart cart);
+
+    @GET("payment/payment-link")
+    Call<ResponseDTO<Payment>> createPaymentLink();
+
 }
