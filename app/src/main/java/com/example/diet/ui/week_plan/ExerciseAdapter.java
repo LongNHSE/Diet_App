@@ -1,5 +1,7 @@
 package com.example.diet.ui.week_plan;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.diet.ExerciseDetailActivity;
 import com.example.diet.R;
 import com.example.diet.exercise.dto.service.dto.Exercise;
 
@@ -35,10 +38,19 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
     @Override
     public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
         Exercise exercise = exerciseList.get(position);
-        holder.exName.setText( "Exercise: " + exercise.getExName());
+        holder.exName.setText("Exercise: " + exercise.getExName());
         holder.calorexp.setText(String.valueOf(exercise.getCalorexp()) + " kcal");
         holder.description.setText(exercise.getDescription());
         Glide.with(context).load(exercise.getIcon()).into(holder.icon);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ExerciseDetailActivity.class);
+                intent.putExtra("exerciseId", exercise.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

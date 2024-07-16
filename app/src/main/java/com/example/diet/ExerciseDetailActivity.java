@@ -61,7 +61,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     }
 
     private void fetchExerciseData(String authToken) {
-        String exerciseId = "6672bdd6e220b5db05a1c5c8";
+        String exerciseId = "6672bdd6e220b5db05a1c5cc";
 
         Retrofit retrofit = RetrofitClient.getClient(authToken);
         ExerciseServiceImp service = retrofit.create(ExerciseServiceImp.class);
